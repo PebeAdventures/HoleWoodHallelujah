@@ -13,7 +13,13 @@ namespace TvSeriesApi.Data.Context
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<TVSeries>().HasKey(t => t.TVSeriesId);
+            modelBuilder.Entity<Genre>().HasKey(g => g.GenreId);
+            modelBuilder.Entity<Actor>().HasKey(a => a.ActorId);
+            modelBuilder.Entity<Season>().HasKey(s => s.SeasonId);
+            modelBuilder.Entity<Episode>().HasKey(e => e.EpisodeId);
+
+
         }
     }
 }
