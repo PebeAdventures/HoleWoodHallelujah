@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TvSeriesApi.Data.Entities
+﻿namespace TvSeriesApi.Data.Entities
 {
-    internal class Episode
+    public class Episode
     {
+        public int EpisodeId { get; set; }
+        public string Name { get; set; }
+        public Season Season { get; set; }
     }
 }

@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace TvSeriesApi.Data.Entities
+﻿namespace TvSeriesApi.Data.Entities
 {
-    internal class TVSeries
+    public class TVSeries
     {
+        public int TVSeriesId { get; set; }
+        public string Name { get; set; }
+        public int Year { get; set; }
+        public Genre Genre { get; set; }
+        public List<Actor> Cast { get; set; }
+        public List<Season> Seasons { get; set; }
+
     }
 }
