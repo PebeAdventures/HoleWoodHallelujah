@@ -3,7 +3,7 @@ using TvSeriesApi.Data.Entities;
 
 namespace TvSeriesApi.Data.DAL.Repositories
 {
-    public class SeasonRepository : BaseRepository<Season>
+    public class SeasonRepository : BaseRepository<Season>, ISeasonRepository
     {
         private readonly TvSeriesApiContext _context;
 

@@ -7,3 +7,6 @@ global using TvSeriesApi.DTO.Episode;
 global using TvSeriesApi.Services.Interfaces;
 global using TvSeriesApi.Services;
 global using Swashbuckle.AspNetCore.Annotations;
+global using TvSeriesApi.Services.Interfaces;
+global using TvSeriesApi.Data.Entities;
+global using AutoMapper;
