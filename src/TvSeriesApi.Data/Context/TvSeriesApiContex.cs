@@ -19,6 +19,21 @@ namespace TvSeriesApi.Data.Context
             modelBuilder.Entity<Season>().HasKey(s => s.SeasonId);
             modelBuilder.Entity<Episode>().HasKey(e => e.EpisodeId);
 
+            modelBuilder.Entity<TVSeries>()
+                .HasMany(t => t.Seasons)
+                .WithMany(s => s.TVSeries);
+
+            modelBuilder.Entity<TVSeries>()
+                .HasMany(t => t.Cast)
+                .WithMany(s => s.TVSeries);
+
+            modelBuilder.Entity<TVSeries>()
+                .HasOne(t => t.Genre)
+                .WithMany(s => s.TVSeries);
+
+            modelBuilder.Entity<Season>()
+                .HasMany(s => s.Episodes)
+                .WithOne(e => e.Season);
 
         }
     }
