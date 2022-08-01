@@ -1,6 +1,6 @@
 ﻿namespace TvSeriesApi.Services
 {
-    public class EpisodeProfile
+    public class EpisodeService
     {
     }
 }
