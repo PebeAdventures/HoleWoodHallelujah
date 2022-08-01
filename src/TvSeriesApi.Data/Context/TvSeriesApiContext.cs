@@ -3,7 +3,7 @@ using TvSeriesApi.Data.Entities;
 
 namespace TvSeriesApi.Data.Context
 {
-    public class TvSeriesApiContex : DbContext
+    public class TvSeriesApiContext : DbContext
     {
         public DbSet<TVSeries> TVSeries { get; set; }
         public DbSet<Genre> Genres { get; set; }
@@ -34,7 +34,6 @@ namespace TvSeriesApi.Data.Context
             modelBuilder.Entity<Season>()
                 .HasMany(s => s.Episodes)
                 .WithOne(e => e.Season);
-
         }
     }
 }
