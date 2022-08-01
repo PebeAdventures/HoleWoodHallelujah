@@ -2,5 +2,6 @@
 {
     public class ActorUpdateDTO
     {
+        public string Fullname { get; set; }
     }
 }
