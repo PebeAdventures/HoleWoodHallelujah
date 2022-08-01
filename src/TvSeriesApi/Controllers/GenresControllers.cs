@@ -12,7 +12,7 @@
         [HttpGet]
         public async Task<IActionResult> GetAllGenresAsync()
         {
-            var genres = await _genreService.GetAllActorsAsync();
+            var genres = await _genreService.GetAllGenresAsync();
             return Ok(genres);
         }
         //GET api/genres/{id}
@@ -31,20 +31,13 @@
             var genreToCreate = await _genreService.AddGenreAsync(genreCreateDTO);
             return Ok(genreToCreate);
         }
-        //POST api/genre
-        [SwaggerOperation(Summary = "Create genre by name")]
-        [HttpPost]
-        public async Task<IActionResult> CreateActorByNameAsync(string genreToAdd)
-        {
-            var genreToUpdate = await _genreService.AddActorByNameAsync(genreToAdd);
-            return Ok(genreToUpdate);
-        }
+
         //PUT api/genres/{id}
         [SwaggerOperation(Summary = "Update genre by id")]
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateGenreById(int id, GenreUpdateDTO genreUpdateDTO)
         {
-            await _genreservice.EditGenreAsync(id, genreUpdateDTO);
+            await _genreService.EditGenreAsync(id, genreUpdateDTO);
             return NoContent();
         }
         //DELETE api/genres/{id}
