@@ -21,7 +21,7 @@ namespace TvSeriesApi.Data.Context
 
             modelBuilder.Entity<TVSeries>()
                 .HasMany(t => t.Seasons)
-                .WithMany(s => s.TVSeries);
+                .WithOne(s => s.TVSeries);
 
             modelBuilder.Entity<TVSeries>()
                 .HasMany(t => t.Cast)
