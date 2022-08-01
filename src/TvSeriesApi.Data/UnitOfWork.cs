@@ -1,7 +1,6 @@
 ﻿namespace TvSeriesApi.Data
 {
-    public class Class1
+    public class UnitOfWork
     {
-
     }
 }
