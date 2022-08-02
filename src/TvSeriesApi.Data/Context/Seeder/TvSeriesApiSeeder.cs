@@ -10,8 +10,8 @@ namespace TvSeriesApi.Data.Context.Seeder
         {
             var actorList = new List<Actor>();
             var genreList = new List<Genre>();
-            var seasonlist = new List<Season>();
-            var episodeList = new List<Episode>();
+            //  var seasonlist = new List<Season>();
+            //  var episodeList = new List<Episode>();
             var tvSeries = new List<TVSeries>();
 
             //Genres
@@ -77,7 +77,7 @@ namespace TvSeriesApi.Data.Context.Seeder
             List<Actor> gambitActorList = new List<Actor>();
             List<Season> gambitSeasons = new List<Season>();
             List<Episode> gambitEpisodes = new List<Episode>();
-            var gambit = new TVSeries() { Cast = gambitActorList, Genre = dramaGenre, Name = "Queen Gambit", Year = 2020, Seasons = gambitSeasons };
+            var gambit = new TVSeries() { Cast = gambitActorList, Genre = dramaGenre, Name = "Queen Gambit", Year = 2020, Seasons = gambitSeasons, TVSeriesId = 1 };
             var gambitSeason = new Season() { Name = "Season 1", Episodes = gambitEpisodes, TVSeries = gambit };
             gambitSeasons.Add(gambitSeason);
             gambitEpisodes.Add(new Episode() { Name = "Opening", Season = gambitSeason });
@@ -91,7 +91,8 @@ namespace TvSeriesApi.Data.Context.Seeder
             gambitActorList.Add(anyaTaylor);
             gambitActorList.Add(thomasBrodie);
             gambitActorList.Add(mosesIngram);
-
+            tvSeries.Add(gambit);
+            builder.Entity<TVSeries>().HasData(tvSeries);
             //   seasonlist.Add(new Season { Episodes=new Episode { Season} })
         }
     }
