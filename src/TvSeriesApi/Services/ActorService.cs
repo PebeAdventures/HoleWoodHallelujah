@@ -1,19 +1,27 @@
 ﻿
+using TvSeriesApi.Data.DAL.Interfaces;
 
 namespace TvSeriesApi.Services
 {
     public class ActorService : IActorService
     {
-        public Task<ActorReadDTO> AddActorAsync(ActorCreateDTO name)
+        private readonly IActorRepository _actorRepository;
+        private readonly IMapper _mapper;
+
+        public ActorService(IActorRepository actorRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _actorRepository = actorRepository;
+            _mapper = mapper;
         }
 
-        public Task<ActorReadDTO> AddActorByNameAsync(string name)
+        public Task<ActorReadDTO> AddActorAsync(ActorCreateDTO actorDTO)
         {
             throw new NotImplementedException();
-        }
+            //var newActor = _mapper.Map<Actor>(actorDTO);
 
+            //// TODO:  srodek
+            //return _mapper.Map<ActorReadDTO>(newActor);
+        }
         public Task DeleteActorAsync(int id)
         {
             throw new NotImplementedException();
@@ -29,9 +37,10 @@ namespace TvSeriesApi.Services
             throw new NotImplementedException();
         }
 
-        public Task<IEnumerable<ActorReadDTO>> GetAllActorsAsync()
+        public async Task<IEnumerable<ActorReadDTO>> GetAllActorsAsync()
         {
-            throw new NotImplementedException();
+            var actors = await _actorRepository.GetAllAsync();
+            return _mapper.Map<IEnumerable<ActorReadDTO>>(actors);  
         }
     }
 }
