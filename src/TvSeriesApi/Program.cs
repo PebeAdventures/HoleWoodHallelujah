@@ -1,10 +1,12 @@
 using TvSeriesApi.Data;
+using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddSqlServer<TvSeriesApiContext>(builder.Configuration.GetConnectionString("HollywoodDB"));
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
