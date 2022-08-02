@@ -2,10 +2,15 @@
 {
     public class TVSeriesService : ITVSeriesService
     {
-        public Task<TVSeriesReadDTO> AddSeriesAsync(SeriesCreateDTO name)
+        public Task<TVSeriesReadDTO> AddSeriesAsync(TVSeriesCreateDTO name)
         {
             throw new NotImplementedException();
         }
+
+        /*        public Task<TVSeriesReadDTO> AddSeriesAsync(SeriesCreateDTO name)
+       {
+           throw new NotImplementedException();
+       }*/
 
         public Task DeleteSeriesAsync(int id)
         {

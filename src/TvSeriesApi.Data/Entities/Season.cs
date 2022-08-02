@@ -4,7 +4,8 @@
     {
         public int SeasonId { get; set; }
         public string Name { get; set; }
+        public int TVSeriesId { get; set; }
         public TVSeries TVSeries { get; set; }
-        public List<Episode> Episodes { get; set; }
+        public IEnumerable<Episode> Episodes { get; set; } = new List<Episode>();
     }
 }

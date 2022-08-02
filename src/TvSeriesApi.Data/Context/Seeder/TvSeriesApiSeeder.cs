@@ -1,33 +1,25 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TvSeriesApi.Data.Entities;
-
-namespace TvSeriesApi.Data.Context.Seeder
+﻿namespace TvSeriesApi.Data.Context.Seeder
 {
     public static class TvSeriesApiSeeder
     {
 
         public static void SeedDatabase(this ModelBuilder builder)
         {
-            var actorList = new List<Actor>();
+            //@GENRE
             var genreList = new List<Genre>();
-            //  var seasonlist = new List<Season>();
-            //  var episodeList = new List<Episode>();
-            var tvSeries = new List<TVSeries>();
-
-            //Genres
-            var dramaGenre = new Genre { Name = "Drama", GenreId = 1 };
-            var trillingGenre = new Genre { Name = "Trilling", GenreId = 2 };
-            var actiongenre = new Genre { Name = "Action", GenreId = 3 };
-            var scienceFictionGenre = new Genre { Name = "Science Fiction", GenreId = 4 };
+            var dramaGenre = new Genre { GenreId = 1, Name = "Drama", TVSeries = new List<TVSeries>() };
+            var trillingGenre = new Genre { Name = "Trilling", GenreId = 2, TVSeries = new List<TVSeries>() };
+            var actiongenre = new Genre { Name = "Action", GenreId = 3, TVSeries = new List<TVSeries>() };
+            var scienceFictionGenre = new Genre { Name = "Science Fiction", GenreId = 4, TVSeries = new List<TVSeries>() };
             var comedyGenre = new Genre { Name = "Comedy", GenreId = 5 };
-            var crimeFiction = new Genre { Name = "Crime Fiction", GenreId = 6 };
+            var crimeFiction = new Genre { Name = "Crime Fiction", GenreId = 6, TVSeries = new List<TVSeries>() };
             genreList.Add(dramaGenre);
             genreList.Add(trillingGenre);
             genreList.Add(actiongenre);
             genreList.Add(scienceFictionGenre);
             genreList.Add(comedyGenre);
             genreList.Add(crimeFiction);
-
+            builder.Entity<Genre>().HasData(genreList);
             //Actors
             //gambit krolowej
             var anyaTaylor = new Actor() { Fullname = "Anya Taylor", Age = 25, TVSeries = new List<TVSeries>(), ActorId = 1 };
@@ -54,7 +46,10 @@ namespace TvSeriesApi.Data.Context.Seeder
             var justinRoiland = new Actor() { Fullname = "Justin Roiland", Age = 31, TVSeries = new List<TVSeries>(), ActorId = 17 };
             var chrisParnell = new Actor() { Fullname = "Chris Parnell", Age = 40, TVSeries = new List<TVSeries>(), ActorId = 18 };
             var tomKenny = new Actor() { Fullname = "Tom Kenny", Age = 61, TVSeries = new List<TVSeries>(), ActorId = 19 };
-
+            var actorList = new List<Actor>();
+            actorList.Add(anyaTaylor);
+            actorList.Add(thomasBrodie);
+            actorList.Add(mosesIngram);
             actorList.Add(bryanCranston);
             actorList.Add(aaronPaul);
             actorList.Add(annaGunn);
@@ -71,28 +66,44 @@ namespace TvSeriesApi.Data.Context.Seeder
             actorList.Add(chrisParnell);
             actorList.Add(tomKenny);
             actorList.Add(justinRoiland);
-            //Tv Series
+            builder.Entity<Actor>().HasData(actorList);
 
-            // tvSeries.Add(new TVSeries { })
-            List<Actor> gambitActorList = new List<Actor>();
-            List<Season> gambitSeasons = new List<Season>();
-            List<Episode> gambitEpisodes = new List<Episode>();
-            var gambitTvSeries = new TVSeries() { Cast = gambitActorList, Genre = dramaGenre, Name = "Queen Gambit", Year = 2020, Seasons = gambitSeasons, TVSeriesId = 1 };
-            var gambitSeason = new Season() { Name = "Season 1", Episodes = gambitEpisodes, TVSeries = gambitTvSeries, SeasonId = 1 };
-            gambitSeasons.Add(gambitSeason);
-            gambitEpisodes.Add(new Episode() { Name = "Opening", Season = gambitSeason });
-            gambitEpisodes.Add(new Episode() { Name = "Exchanges", Season = gambitSeason });
-            gambitEpisodes.Add(new Episode() { Name = "Doubled Pawns", Season = gambitSeason });
-            gambitEpisodes.Add(new Episode() { Name = "Middle Game", Season = gambitSeason });
-            gambitEpisodes.Add(new Episode() { Name = "Fork", Season = gambitSeason });
-            gambitEpisodes.Add(new Episode() { Name = "Adjounment", Season = gambitSeason });
-            gambitEpisodes.Add(new Episode() { Name = "End", Season = gambitSeason });
+            //@TVSeries
+            var tvSeriesList = new List<TVSeries>();
+            tvSeriesList.Add(new TVSeries() { GenreId = 1, Name = "GambitSuko", Year = 2020, TVSeriesId = 1 });
+            tvSeriesList.Add(new TVSeries() { GenreId = 2, Name = "Breaking Bad", Year = 2002, TVSeriesId = 2 });
+            tvSeriesList.Add(new TVSeries() { GenreId = 3, Name = "Branczo", Year = 2022, TVSeriesId = 3 });
+            builder.Entity<TVSeries>().HasData(tvSeriesList);
 
-            gambitActorList.Add(anyaTaylor);
-            gambitActorList.Add(thomasBrodie);
-            gambitActorList.Add(mosesIngram);
-            tvSeries.Add(gambitTvSeries);
-            builder.Entity<TVSeries>().HasData(tvSeries);
+
+            //@SEASON
+            List<Season> seasons = new List<Season>();
+
+            var gambitSeason = new Season() { Name = "Season 1", SeasonId = 1, TVSeriesId = 1 };
+            var breakingBads1 = new Season() { Name = "Season 1", SeasonId = 2, TVSeriesId = 2 };
+            var breakingBads2 = new Season() { Name = "Season 2", SeasonId = 3, TVSeriesId = 2 };
+            var branczoS1 = new Season() { Name = "Season 1", SeasonId = 4, TVSeriesId = 3 };
+            seasons.Add(gambitSeason);
+            seasons.Add(breakingBads1);
+            seasons.Add(breakingBads2);
+            seasons.Add(branczoS1);
+            builder.Entity<Season>().HasData(seasons);
+
+            //@EPISODES
+            List<Episode> episodes = new List<Episode>();
+            episodes.Add(new Episode() { Name = "Opening", SeasonId = 1, EpisodeId = 1 });
+            episodes.Add(new Episode() { Name = "Exchanges", SeasonId = 1, EpisodeId = 2 });
+            episodes.Add(new Episode() { Name = "Doubled Pawns", SeasonId = 1, EpisodeId = 3 });
+            episodes.Add(new Episode() { Name = "Middle Game", SeasonId = 1, EpisodeId = 4 });
+            episodes.Add(new Episode() { Name = "Fork", SeasonId = 1, EpisodeId = 5 });
+            episodes.Add(new Episode() { Name = "Adjounment", SeasonId = 1, EpisodeId = 6 });
+            episodes.Add(new Episode() { Name = "End", SeasonId = 1, EpisodeId = 7 });
+            episodes.Add(new Episode() { Name = "breakings1", SeasonId = 2, EpisodeId = 8 });
+            episodes.Add(new Episode() { Name = "breakings2", SeasonId = 3, EpisodeId = 9 });
+            episodes.Add(new Episode() { Name = "branczoAndMateusz", SeasonId = 3, EpisodeId = 10 });
+
+            builder.Entity<Episode>().HasData(episodes);
+
             //   seasonlist.Add(new Season { Episodes=new Episode { Season} })
         }
     }

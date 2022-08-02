@@ -1,6 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TvSeriesApi.Data.Context.Seeder;
-using TvSeriesApi.Data.Entities;
+﻿
 
 namespace TvSeriesApi.Data.Context
 {
@@ -14,7 +12,6 @@ namespace TvSeriesApi.Data.Context
 
         public TvSeriesApiContext(DbContextOptions<TvSeriesApiContext> options) : base(options)
         { }
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

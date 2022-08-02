@@ -4,7 +4,7 @@
     [ApiController]
     public class ActorsControllers : ControllerBase
     {
-        private readonly IActorService _actorService;
+        /*private readonly IActorService _actorService;
         public ActorsControllers()
         {
 
@@ -72,6 +72,6 @@
             await _actorService.DeleteActorAsync(id);
             return NoContent();
 
-        }
+        }*/
     }
 }
