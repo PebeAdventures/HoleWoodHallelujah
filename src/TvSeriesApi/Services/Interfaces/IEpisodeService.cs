@@ -6,6 +6,6 @@
         Task<EpisodeReadDTO> GetEpisodeByIdAsync(int id);
         Task DeleteEpisodeAsync(int id);
         Task CreateEpisode(EpisodeCreateDTO episode);
-        Task UpdateEpisode(EpisodeUpdateDTO episode);
+        Task UpdateEpisodeAsync(EpisodeUpdateDTO episode);
     }
 }

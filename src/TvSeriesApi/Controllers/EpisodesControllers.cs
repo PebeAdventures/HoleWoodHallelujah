@@ -12,7 +12,7 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEpisode(int id)
+        public async Task<IActionResult> GetEpisodeAsync(int id)
         {
             var episode = await _episodeService.GetEpisodeByIdAsync(id);
             if (episode == null)
@@ -24,23 +24,23 @@
         }
 
         [HttpDelete]
-        public async Task<IActionResult> DeleteEpisode(int id)
+        public async Task<IActionResult> DeleteEpisodeAsync(int id)
         {
             await _episodeService.DeleteEpisodeAsync(id);
             return NoContent();
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateEpisode(EpisodeCreateDTO episode)
+        public async Task<IActionResult> CreateEpisodeAsync(EpisodeCreateDTO episode)
         {
             await _episodeService.CreateEpisode(episode);
             return Created("", episode);
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEpisode(EpisodeUpdateDTO episode)
+        public async Task<IActionResult> UpdateEpisodeAsync(EpisodeUpdateDTO episode)
         {
-            await _episodeService.UpdateEpisode(episode);
+            await _episodeService.UpdateEpisodeAsync(episode);
             return Created("", episode);
         }
     }

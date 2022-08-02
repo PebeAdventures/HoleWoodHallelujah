@@ -24,13 +24,13 @@ namespace TvSeriesApi.Services
 
         public async Task<EpisodeReadDTO> GetEpisodeByIdAsync(int id)
         {
-            var episode = await _unitOfWork.Episodes.GetEpisodeWithAlbum(id);
+            var episode = await _unitOfWork.Episodes.GetEpisodeWithAlbumAsync(id);
             var episodeDTO = _mapper.Map<EpisodeReadDTO>(episode);
 
             return episodeDTO;
         }
 
-        public Task UpdateEpisode(EpisodeUpdateDTO episode)
+        public async Task UpdateEpisodeAsync(EpisodeUpdateDTO episode)
         {
             throw new NotImplementedException();
         }

@@ -13,7 +13,7 @@ namespace TvSeriesApi.Data.DAL.Repositories
             _context = tvSeriesApiContext;
         }
 
-        public async Task<Episode> GetEpisodeWithAlbum(int id)
+        public async Task<Episode> GetEpisodeWithAlbumAsync(int id)
         {
             return await _context.Episodes
                 .Include(e => e.Season)
