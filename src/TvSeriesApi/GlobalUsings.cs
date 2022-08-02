@@ -9,3 +9,4 @@ global using TvSeriesApi.Services;
 global using Swashbuckle.AspNetCore.Annotations;
 global using TvSeriesApi.Data.Entities;
 global using AutoMapper;
+global using TvSeriesApi.Data;

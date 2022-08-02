@@ -1,4 +1,5 @@
-﻿using TvSeriesApi.Data.Context;
+﻿using Microsoft.EntityFrameworkCore;
+using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.Entities;
 
 namespace TvSeriesApi.Data.DAL.Repositories
@@ -10,6 +11,13 @@ namespace TvSeriesApi.Data.DAL.Repositories
         public EpisodeRepository(TvSeriesApiContext context, TvSeriesApiContext tvSeriesApiContext) : base(context)
         {
             _context = tvSeriesApiContext;
+        }
+
+        public async Task<Episode> GetEpisodeWithSeasonAsync(int id)
+        {
+            return await _context.Episodes
+                .Include(e => e.Season)
+                .FirstOrDefaultAsync(e => e.EpisodeId == id);
         }
     }
 }

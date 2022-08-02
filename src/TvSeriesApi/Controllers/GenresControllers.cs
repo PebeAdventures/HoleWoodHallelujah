@@ -1,5 +1,7 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Route("api/Genre")]
+    [ApiController]
     public class GenresControllers : ControllerBase
     {
         private readonly IGenreService _genreService;
