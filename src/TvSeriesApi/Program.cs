@@ -1,16 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using TvSeriesApi.Data;
-using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddDbContext<TvSeriesApiContext>(builder =>
-{
-    builder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ApiMovie;Integrated Security=True");
-});
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
