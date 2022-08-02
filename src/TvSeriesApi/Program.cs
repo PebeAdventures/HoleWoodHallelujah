@@ -3,6 +3,7 @@ using TvSeriesApi.Data;
 using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 var mapConfig = new AutoMapper.MapperConfiguration(c =>
@@ -10,7 +11,12 @@ var mapConfig = new AutoMapper.MapperConfiguration(c =>
     c.AddProfile(new MapperProfile());
 });
 
-// Add services to the container.
+var logger = new LoggerConfiguration()
+  .ReadFrom.Configuration(builder.Configuration)
+  .Enrich.FromLogContext()
+  .CreateLogger();
+builder.Logging.ClearProviders();
+builder.Logging.AddSerilog(logger);
 builder.Services.AddSqlServer<TvSeriesApiContext>(builder.Configuration.GetConnectionString("HollywoodDB"));
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
