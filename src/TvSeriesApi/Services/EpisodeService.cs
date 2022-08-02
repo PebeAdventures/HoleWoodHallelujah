@@ -17,14 +17,15 @@ namespace TvSeriesApi.Services
             throw new NotImplementedException();
         }
 
-        public Task DeleteEpisodeAsync(int id)
+        public async Task DeleteEpisodeAsync(int id)
         {
-            throw new NotImplementedException();
+            var episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
+            _unitOfWork.Episodes.DeleteAsync(episode);
         }
 
         public async Task<EpisodeReadDTO> GetEpisodeByIdAsync(int id)
         {
-            var episode = await _unitOfWork.Episodes.GetEpisodeWithAlbumAsync(id);
+            var episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
             var episodeDTO = _mapper.Map<EpisodeReadDTO>(episode);
 
             return episodeDTO;
