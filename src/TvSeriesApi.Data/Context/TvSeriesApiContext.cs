@@ -11,6 +11,10 @@ namespace TvSeriesApi.Data.Context
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Episode> Episodes { get; set; }
 
+        public TvSeriesApiContext(DbContextOptions options) : base(options)
+        {
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<TVSeries>().HasKey(t => t.TVSeriesId);
