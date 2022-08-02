@@ -9,7 +9,8 @@
             CreateMap<ActorCreateDTO, Actor>();
             CreateMap<ActorUpdateDTO, Actor>();
 
-            CreateMap<Episode, EpisodeReadDTO>();
+            CreateMap<Episode, EpisodeReadDTO>()
+                .ForMember(e => e.Season, opt => opt.MapFrom<EpisodeSeasonNameResolver>());
             CreateMap<EpisodeCreateDTO, Episode>();
             CreateMap<EpisodeUpdateDTO, Episode>();
 
