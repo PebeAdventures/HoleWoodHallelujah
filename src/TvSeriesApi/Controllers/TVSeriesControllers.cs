@@ -1,5 +1,7 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Route("api/tvseries")]
+    [ApiController]
     public class TVSeriesControllers : ControllerBase
     {
         private readonly ITVSeriesService _tvSeriesService;
