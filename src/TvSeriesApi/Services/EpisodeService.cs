@@ -32,6 +32,17 @@ namespace TvSeriesApi.Services
             return OperationResult.Fail("Episode not deleted");
         }
 
+        public async Task<OperationResult<List<EpisodeReadDTO>>> GetAllEpisodesAsync()
+        {
+            var episodes = await _unitOfWork.Episodes.GetAllEpisodesAsync();
+            if (episodes == null)
+                return OperationResult<List<EpisodeReadDTO>>.Fail("Episode not exist");
+
+            var episodesDTO = _mapper.Map<List<Episode>, List<EpisodeReadDTO>>(episodes.ToList());
+
+            return OperationResult<List<EpisodeReadDTO>>.Success(episodesDTO);
+        }
+
         public async Task<OperationResult<EpisodeReadDTO>> GetEpisodeByIdAsync(int id)
         {
             var episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
@@ -44,13 +55,15 @@ namespace TvSeriesApi.Services
 
         public async Task<OperationResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
         {
-            if (await _unitOfWork.Episodes.GetEpisodeByIdAsync(episodeId) == null)
+            var episodeFromDB = await _unitOfWork.Episodes.GetEpisodeByIdAsync(episodeId);
+
+            if (episodeFromDB == null)
             {
                 return OperationResult.Fail("Episode no exist");
             }
-            var episodeToUpdate = _mapper.Map<Episode>(episode);
-            episodeToUpdate.EpisodeId = episodeId;
-            _unitOfWork.Episodes.UpdateAsync(episodeToUpdate);
+
+            episodeFromDB = _mapper.Map(episode, episodeFromDB);
+            await _unitOfWork.Episodes.UpdateAsync(episodeFromDB);
             return OperationResult.Success();
         }
 

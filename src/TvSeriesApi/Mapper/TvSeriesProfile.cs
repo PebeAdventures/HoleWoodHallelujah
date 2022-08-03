@@ -5,8 +5,10 @@
         public TvSeriesProfile()
         {
             CreateMap<TVSeries, TVSeriesReadDTO>();
-            /*            CreateMap<TVSeriesCreateDTO, TVSeries>();
-                        CreateMap<TVSeriesUpdateDTO, TVSeries>();*/
+            CreateMap<TVSeries, TVSeriesCreateDTO>();
+            CreateMap<TVSeries, TVSeriesUpdateDTO>();
         }
     }
 }
+
+
