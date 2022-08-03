@@ -14,13 +14,13 @@
         [HttpGet]
         public async Task<IActionResult> GetEpisodeAsync(int id)
         {
-            var episode = await _episodeService.GetEpisodeByIdAsync(id);
-            if (episode == null)
+            var operationResult = await _episodeService.GetEpisodeByIdAsync(id);
+            if (operationResult.Status == OperationStatus.Fail)
             {
-                return NotFound();
+                return NotFound(operationResult.ErrorMessage);               
             }
 
-            return Ok(episode);
+            return Ok(operationResult.Value);
         }
 
         [HttpDelete]
