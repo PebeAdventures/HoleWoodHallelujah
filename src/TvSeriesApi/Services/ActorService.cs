@@ -1,26 +1,37 @@
 ﻿
+using TvSeriesApi.Data;
 using TvSeriesApi.Data.DAL.Interfaces;
 
 namespace TvSeriesApi.Services
 {
     public class ActorService : IActorService
     {
-        private readonly IActorRepository _actorRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IMapper _mapper;
 
-        public ActorService(IActorRepository actorRepository, IMapper mapper)
+        public ActorService(IUnitOfWork actorRepository, IMapper mapper)
         {
-            _actorRepository = actorRepository;
+            _unitOfWork = actorRepository;
             _mapper = mapper;
         }
 
-        public Task<ActorReadDTO> AddActorAsync(ActorCreateDTO actorDTO)
+        public async Task<IEnumerable<ActorReadDTO>> GetAllActorsAsync()
         {
-            throw new NotImplementedException();
-            //var newActor = _mapper.Map<Actor>(actorDTO);
+            var actors = await _unitOfWork.Actors.GetAllAsync();
+            return _mapper.Map<IEnumerable<ActorReadDTO>>(actors);
+        }
 
-            //// TODO:  srodek
-            //return _mapper.Map<ActorReadDTO>(newActor);
+        public async Task<ActorReadDTO> GetActorByIdAsync(int id)
+        {
+            var actor = await _unitOfWork.Actors.GetActorByIdAsync(id);
+            return _mapper.Map<ActorReadDTO>(actor);
+        }
+
+        public async Task<ActorReadDTO> AddActorAsync(ActorCreateDTO actorDTO)
+        {
+            var newActor = _mapper.Map<Actor>(actorDTO);
+            var actor = await _unitOfWork.Actors.AddAsync(newActor);
+            return _mapper.Map<ActorReadDTO>(actor);
         }
         public Task DeleteActorAsync(int id)
         {
@@ -32,15 +43,8 @@ namespace TvSeriesApi.Services
             throw new NotImplementedException();
         }
 
-        public Task<ActorReadDTO> GetActorByIdAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
 
-        public async Task<IEnumerable<ActorReadDTO>> GetAllActorsAsync()
-        {
-            var actors = await _actorRepository.GetAllAsync();
-            return _mapper.Map<IEnumerable<ActorReadDTO>>(actors);  
-        }
+        
     }
 }
