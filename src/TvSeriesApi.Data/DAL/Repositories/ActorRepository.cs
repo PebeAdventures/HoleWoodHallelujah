@@ -14,6 +14,6 @@ namespace TvSeriesApi.Data.DAL.Repositories
         }
 
         public async Task<Actor> GetActorByIdAsync(int id)
-        => await _context.Actors.Include(tv => tv.TVSeries).FirstOrDefaultAsync();       
+        => await _context.Actors.Include(tv => tv.TVSeries).FirstOrDefaultAsync(e => e.ActorId == id);       
     }
 }
