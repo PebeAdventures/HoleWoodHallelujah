@@ -11,7 +11,6 @@ namespace TvSeriesApi.Data.DAL.Repositories
         {
             _context = context;
         }
-
-        public async Task<Season> GetSeasonByIdAsync(int idSeason) => await _context.Set<Season>().FindAsync(idSeason);
+        public async Task<Season> GetSeasonByIdAsync(int idSeason) => await _context.Seasons.Include(e => e.Episodes).Where(id => id.SeasonId == idSeason).FirstOrDefaultAsync();
     }
 }
