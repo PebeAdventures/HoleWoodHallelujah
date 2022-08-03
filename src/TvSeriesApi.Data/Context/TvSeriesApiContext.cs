@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using TvSeriesApi.Data.Entities;
+﻿
 
 namespace TvSeriesApi.Data.Context
 {
@@ -11,9 +10,8 @@ namespace TvSeriesApi.Data.Context
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Episode> Episodes { get; set; }
 
-        public TvSeriesApiContext(DbContextOptions options) : base(options)
-        {
-        }
+        public TvSeriesApiContext(DbContextOptions<TvSeriesApiContext> options) : base(options)
+        { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -38,6 +36,8 @@ namespace TvSeriesApi.Data.Context
             modelBuilder.Entity<Season>()
                 .HasMany(s => s.Episodes)
                 .WithOne(e => e.Season);
+            modelBuilder.SeedDatabase();
         }
     }
 }
+
