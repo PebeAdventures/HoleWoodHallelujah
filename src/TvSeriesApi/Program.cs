@@ -29,6 +29,7 @@ builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<ISeasonRepository, SeasonRepository>();
 builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
