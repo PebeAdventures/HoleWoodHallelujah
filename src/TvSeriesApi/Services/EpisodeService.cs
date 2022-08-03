@@ -13,10 +13,10 @@ namespace TvSeriesApi.Services
             _mapper = mapper;
         }
 
-        public Task CreateEpisode(EpisodeCreateDTO episode)
+        public async Task CreateEpisode(EpisodeCreateDTO episodeDTO)
         {
-            var episode = _mapper.Map<Episode>(episode);
-            _unitOfWork.Episodes.AddAsync(episode);
+            var episode = _mapper.Map<Episode>(episodeDTO);
+            await _unitOfWork.Episodes.AddAsync(episode);
         }
 
         public async Task<OperationResult> DeleteEpisodeAsync(int id)
@@ -42,9 +42,16 @@ namespace TvSeriesApi.Services
             return OperationResult<EpisodeReadDTO>.Success(episodeDTO);
         }
 
-        public async Task UpdateEpisodeAsync(EpisodeUpdateDTO episode)
+        public async Task<OperationResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
         {
-            throw new NotImplementedException();
+            if (await _unitOfWork.Episodes.GetEpisodeByIdAsync(episodeId) == null)
+            {
+                return OperationResult.Fail("Episode no exist");
+            }
+            var episodeToUpdate = _mapper.Map<Episode>(episode);
+            episodeToUpdate.EpisodeId = episodeId;
+            _unitOfWork.Episodes.UpdateAsync(episodeToUpdate);
+            return OperationResult.Success();
         }
 
         Task IEpisodeService.DeleteEpisodeAsync(int id)
