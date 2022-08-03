@@ -2,21 +2,26 @@
 {
     [Route("api/seasons")]
     [ApiController]
-    public class SeasonsControllers
+    public class SeasonsControllers : ControllerBase
     {
         private readonly ISeasonService _seasonService;
         public SeasonsControllers(ISeasonService seasonService)
         {
             _seasonService = seasonService;
         }
-        //GET api/seasons/{id} 
+
+        //GET api/seasons/{id}
         [SwaggerOperation(Summary = "Get seasons by id")]
         [HttpGet]
-        public async Task<IActionResult> GetAllSeriesByIdAsync()
+        public async Task<IActionResult> GetAllSeasonsByIdAsync(int seasonId)
         {
-            var series = await _seasonService.
-            return Ok(series);
+            var operationResult = await _seasonService.GetSeasonById(seasonId);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return NotFound(operationResult.ErrorMessage);
+            }
+            return Ok(operationResult.Value);
         }
-
     }
 }
+

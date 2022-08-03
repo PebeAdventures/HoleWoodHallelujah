@@ -13,10 +13,11 @@ namespace TvSeriesApi.Services
             _mapper = mapper;
         }
 
-        public async Task CreateEpisode(EpisodeCreateDTO episodeDTO)
+        public async Task<OperationResult>CreateEpisode(EpisodeCreateDTO episodeDTO)
         {
             var episode = _mapper.Map<Episode>(episodeDTO);
             await _unitOfWork.Episodes.AddAsync(episode);
+            return OperationResult.Success();
         }
 
         public async Task<OperationResult> DeleteEpisodeAsync(int id)
@@ -65,11 +66,6 @@ namespace TvSeriesApi.Services
             episodeFromDB = _mapper.Map(episode, episodeFromDB);
             await _unitOfWork.Episodes.UpdateAsync(episodeFromDB);
             return OperationResult.Success();
-        }
-
-        Task IEpisodeService.DeleteEpisodeAsync(int id)
-        {
-            throw new NotImplementedException();
         }
     }
 }

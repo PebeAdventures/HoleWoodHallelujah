@@ -10,6 +10,16 @@
             _mapper = mapper;
         }
 
+        public async Task<OperationResult<SeasonReadDTO>> GetSeasonById(int seasonId)
+        {
+            var seasonFromDB = await _unitOfWork.Seasons.GetSeasonByIdAsync(seasonId);
+            if (seasonFromDB == null)
+            {
+                return OperationResult<SeasonReadDTO>.Fail("Season not exist");
+            }
+            var seasonDTO = _mapper.Map<SeasonReadDTO>(seasonFromDB);
+            return OperationResult<SeasonReadDTO>.Success(seasonDTO);
+        }
         public async Task<OperationResult<IEnumerable<EpisodeReadDTO>>> GetAllEpisodesBySeasonIdAsync(int seasonId)
         {
             var seasonFromDB = await _unitOfWork.Seasons.GetSeasonByIdAsync(seasonId);
@@ -21,7 +31,7 @@
             var episodesDTO = _mapper.Map<IEnumerable<EpisodeReadDTO>>(episodes);
 
             return OperationResult<IEnumerable<EpisodeReadDTO>>.Success(episodesDTO);
-            
+
         }
 
         public async Task<OperationResult<EpisodeReadDTO>> GetEpisodeByIdBySeasonIdAsync(int seasonId, int episodeId)
@@ -32,7 +42,7 @@
                 return OperationResult<EpisodeReadDTO>.Fail("Season not exist");
             }
             else
-            { 
+            {
                 var episodeFromDB = seasonFromDB.Episodes.Where(e => e.EpisodeId == episodeId);
                 if (episodeFromDB == null)
                 {
@@ -44,10 +54,11 @@
 
         }
 
-        public async Task CreateSeason(SeasonCreateDTO seasonCreateDTO)
+        public async Task<OperationResult> CreateSeason(SeasonCreateDTO seasonCreateDTO)
         {
             var season = _mapper.Map<Season>(seasonCreateDTO);
             await _unitOfWork.Seasons.AddAsync(season);
+            return OperationResult<SeasonCreateDTO>.Success();
         }
 
         public async Task<OperationResult> EditSeasonAync(int seasonId, SeasonUpdateDTO seasonUpdateDTO)
@@ -62,7 +73,7 @@
             return OperationResult.Success();
         }
 
-        public async Task<OperationResult> DeleteSeasonAsync(int id)
+        public async Task<OperationResult> DeleteSeasonAsync(int seasonId)
         {
             var seasonFromDB = await _unitOfWork.Seasons.GetSeasonByIdAsync(seasonId);
             if (seasonFromDB == null)
@@ -72,5 +83,6 @@
             _unitOfWork.Seasons.DeleteAsync(seasonFromDB);
             return OperationResult.Success();
         }
+
     }
 }
