@@ -33,9 +33,11 @@ namespace TvSeriesApi.Services
             var actor = await _unitOfWork.Actors.AddAsync(newActor);
             return _mapper.Map<ActorReadDTO>(actor);
         }
-        public Task DeleteActorAsync(int id)
+        public async Task DeleteActorAsync(int id)
         {
-            throw new NotImplementedException();
+            //var actor = await _unitOfWork.Actors.GetActorByIdAsync(id);
+            //_mapper.Map
+                throw new NotImplementedException();
         }
 
         public Task EditActorAsync(int id, ActorUpdateDTO actorDTO)
