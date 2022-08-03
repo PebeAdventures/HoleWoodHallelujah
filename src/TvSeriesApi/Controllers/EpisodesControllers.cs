@@ -38,9 +38,14 @@
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEpisodeAsync(EpisodeUpdateDTO episode)
+        public async Task<IActionResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
         {
-            await _episodeService.UpdateEpisodeAsync(episode);
+            var operationResult = await _episodeService.UpdateEpisodeAsync(episodeId, episode);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return BadRequest(operationResult.ErrorMessage);
+            }
+
             return Created("", episode);
         }
     }
