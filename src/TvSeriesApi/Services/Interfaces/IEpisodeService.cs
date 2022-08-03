@@ -6,5 +6,6 @@
         Task DeleteEpisodeAsync(int id);
         Task CreateEpisode(EpisodeCreateDTO episode);
         Task<OperationResult> UpdateEpisodeAsync (int episodeId, EpisodeUpdateDTO episode);
+        Task<OperationResult<List<EpisodeReadDTO>>> GetAllEpisodesAsync();
     }
 }
