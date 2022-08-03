@@ -4,11 +4,16 @@ using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
 using Serilog;
+using TvSeriesApi.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 var mapConfig = new AutoMapper.MapperConfiguration(c =>
 {
-    c.AddProfile(new MapperProfile());
+    c.AddProfile(new ActorProfile());
+    c.AddProfile(new EpisodeProfile());
+    c.AddProfile(new GenreProfile());
+    c.AddProfile(new SeasonProfile());
+    c.AddProfile(new TvSeriesProfile());
 });
 
 var logger = new LoggerConfiguration()
