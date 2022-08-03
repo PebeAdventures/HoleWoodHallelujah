@@ -6,6 +6,7 @@ namespace TvSeriesApi.Services
     {
         private IUnitOfWork _unitOfWork;
         private IMapper _mapper;
+
         public EpisodeService(IUnitOfWork unitOfWork, IMapper mapper)
         {
             _unitOfWork = unitOfWork;
@@ -14,24 +15,39 @@ namespace TvSeriesApi.Services
 
         public Task CreateEpisode(EpisodeCreateDTO episode)
         {
-            throw new NotImplementedException();
+            var episode = _mapper.Map<Episode>(episode);
+            _unitOfWork.Episodes.AddAsync(episode);
         }
 
-        public async Task DeleteEpisodeAsync(int id)
+        public async Task<OperationResult> DeleteEpisodeAsync(int id)
         {
             var episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
             _unitOfWork.Episodes.DeleteAsync(episode);
+
+            episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
+
+            if (episode == null)
+                return OperationResult.Success();
+            
+            return OperationResult.Fail("Episode not deleted");
         }
 
-        public async Task<EpisodeReadDTO> GetEpisodeByIdAsync(int id)
+        public async Task<OperationResult<EpisodeReadDTO>> GetEpisodeByIdAsync(int id)
         {
             var episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
-            var episodeDTO = _mapper.Map<EpisodeReadDTO>(episode);
+            if (episode == null)
+                return OperationResult<EpisodeReadDTO>.Fail("Episode not exist");
 
-            return episodeDTO;
+            var episodeDTO = _mapper.Map<EpisodeReadDTO>(episode);
+            return OperationResult<EpisodeReadDTO>.Success(episodeDTO);
         }
 
         public async Task UpdateEpisodeAsync(EpisodeUpdateDTO episode)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task IEpisodeService.DeleteEpisodeAsync(int id)
         {
             throw new NotImplementedException();
         }
