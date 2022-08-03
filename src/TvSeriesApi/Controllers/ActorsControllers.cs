@@ -23,12 +23,26 @@
             return Ok(actors);
         }
 
+
         [SwaggerOperation(Summary = "Retrieves specific Artist")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
-            var artist = await _actorService.GetActorByIdAsync(id);
-            if (artist is not null) return Ok(artist);
+            var actor = await _actorService.GetActorByIdAsync(id);
+            if (actor is not null)
+            {
+                return Ok(actor);
+            }
+            return NotFound();
+        }
+
+        //GET api/actors/{id}/TvSeries
+        [SwaggerOperation(Summary = "Get specific Actor with TvSeries")]
+        [HttpGet("{id}/TvSeries")]
+        public async Task<IActionResult> GetActorWithTvSeriesByIdAsync(int id)
+        {
+            var actor = await _actorService.GetActorWithTvSeries(id);
+            if (actor is not null) return Ok(actor);
             return NotFound();
         }
 
