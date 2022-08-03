@@ -1,4 +1,4 @@
-﻿namespace TvSeriesApi.DTO.Season
+﻿namespace TvSeriesApi.DTO.Seasons
 {
     public class SeasonReadDTO
     {

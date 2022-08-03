@@ -12,18 +12,32 @@
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetEpisodeAsync(int id)
+        public async Task<IActionResult> GetEpisodesAsync()
         {
-            var episode = await _episodeService.GetEpisodeByIdAsync(id);
-            if (episode == null)
+            var operationResult = await _episodeService.GetAllEpisodesAsync();
+            if (operationResult.Status == OperationStatus.Fail)
             {
-                return NotFound();
+                return NotFound(operationResult.ErrorMessage);
             }
 
-            return Ok(episode);
+            return Ok(operationResult.Value);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetEpisodeAsync(int id)
+        {
+            var operationResult = await _episodeService.GetEpisodeByIdAsync(id);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return NotFound(operationResult.ErrorMessage);               
+            }
+
+            return Ok(operationResult.Value);
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public async Task<IActionResult> DeleteEpisodeAsync(int id)
         {
             await _episodeService.DeleteEpisodeAsync(id);
@@ -38,10 +52,17 @@
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateEpisodeAsync(EpisodeUpdateDTO episode)
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
         {
-            await _episodeService.UpdateEpisodeAsync(episode);
-            return Created("", episode);
+            var operationResult = await _episodeService.UpdateEpisodeAsync(episodeId, episode);
+
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return BadRequest(operationResult.ErrorMessage);
+            }
+
+            return NoContent();
         }
     }
 }

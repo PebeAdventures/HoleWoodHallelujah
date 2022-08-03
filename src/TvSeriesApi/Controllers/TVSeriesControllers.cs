@@ -1,29 +1,48 @@
 ﻿namespace TvSeriesApi.Controllers
 {
-    [Route("api/tvseries")]
+    [Route("api/TvSeries")]
     [ApiController]
     public class TVSeriesControllers : ControllerBase
     {
-        private readonly ITVSeriesService _tvSeriesService;
-        public TVSeriesControllers()
-        {
+        private ITVSeriesService _tvSeriesService;
 
+        public TVSeriesControllers(ITVSeriesService tvSeriesService)
+        {
+            _tvSeriesService = tvSeriesService;
         }
+
+
+
+
         //GET api/tvseries
-        [SwaggerOperation(Summary = "Get all TV series")]
+        // [SwaggerOperation(Summary = "Get all TV series")]
         [HttpGet]
         public async Task<IActionResult> GetAllSeriesAsync()
         {
-            var series = await _tvSeriesService.GetAllSeriesAsync();
-            return Ok(series);
+            var operationResult = await _tvSeriesService.GetAllSeriesAsync();
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return NotFound(operationResult.ErrorMessage);
+            }
+            return Ok(operationResult);
         }
-        //GET api/tvseries/{id}
+
+
+
+
         [SwaggerOperation(Summary = "Get TV series by id")]
         [HttpGet("{id}", Name = "GetSeriesByIdAsync")]
+
         public async Task<IActionResult> GetSeriesByIdAsync(int id)
         {
-            var series = await _tvSeriesService.GetSeriesByIdAsync(id);
-            return Ok(series);
+            var operationResult = await _tvSeriesService.GetSeriesByIdAsync(id);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return NotFound(operationResult.ErrorMessage);
+            }
+
+            return Ok(operationResult.Value);
+
         }
         //POST api/tvseries
         [SwaggerOperation(Summary = "Create TV series by DTO data")]

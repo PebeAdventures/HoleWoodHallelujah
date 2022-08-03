@@ -1,14 +1,18 @@
+using Serilog;
 using TvSeriesApi;
-using TvSeriesApi.Data;
 using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
-using Serilog;
+using TvSeriesApi.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
 var mapConfig = new AutoMapper.MapperConfiguration(c =>
 {
-    c.AddProfile(new MapperProfile());
+    c.AddProfile(new ActorProfile());
+    c.AddProfile(new EpisodeProfile());
+    c.AddProfile(new GenreProfile());
+    c.AddProfile(new SeasonProfile());
+    c.AddProfile(new TvSeriesProfile());
 });
 
 var logger = new LoggerConfiguration()
@@ -24,6 +28,7 @@ builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<ISeasonRepository, SeasonRepository>();
 builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+builder.Services.AddScoped<ITVSeriesService, TVSeriesService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();
