@@ -11,5 +11,7 @@ namespace TvSeriesApi.Data.DAL.Repositories
         {
             _context = context;
         }
+
+        public async Task<Genre> GetGenreByIdAsync(int id) => await _context.Genres.Where(g => g.GenreId == id).FirstOrDefaultAsync();
     }
 }

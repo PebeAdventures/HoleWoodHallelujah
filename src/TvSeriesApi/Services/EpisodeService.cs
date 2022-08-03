@@ -1,6 +1,4 @@
-﻿
-
-namespace TvSeriesApi.Services
+﻿namespace TvSeriesApi.Services
 {
     public class EpisodeService : IEpisodeService
     {
@@ -28,7 +26,7 @@ namespace TvSeriesApi.Services
 
             if (episode == null)
                 return OperationResult.Success();
-            
+
             return OperationResult.Fail("Episode not deleted");
         }
 
