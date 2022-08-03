@@ -1,5 +1,4 @@
 ﻿using TvSeriesApi.Data.Context;
-using TvSeriesApi.Data.Entities;
 
 namespace TvSeriesApi.Data.DAL.Repositories
 {
@@ -7,9 +6,15 @@ namespace TvSeriesApi.Data.DAL.Repositories
     {
         private readonly TvSeriesApiContext _context;
 
-        public TvSeriesRepository(TvSeriesApiContext context) : base(context)
+        public TvSeriesRepository(TvSeriesApiContext context, TvSeriesApiContext tvSeriesApiContext) : base(context)
         {
-            _context = context;
+            _context = tvSeriesApiContext;
         }
+
+        public async Task<TVSeries> GetTvSeasonAsync(int id)
+        {
+            return await _context.TVSeries.FirstOrDefaultAsync(e => e.TVSeriesId == id);
+        }
+
     }
 }

@@ -2,5 +2,8 @@
 {
     public class TVSeriesReadDTO
     {
+
+        public string name;
+
     }
 }
