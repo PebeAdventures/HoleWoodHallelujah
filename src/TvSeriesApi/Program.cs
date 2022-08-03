@@ -1,9 +1,8 @@
+using Serilog;
 using TvSeriesApi;
-using TvSeriesApi.Data;
 using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
-using Serilog;
 using TvSeriesApi.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +28,7 @@ builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<ISeasonRepository, SeasonRepository>();
 builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+builder.Services.AddScoped<ITVSeriesService, TVSeriesService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 builder.Services.AddControllers();

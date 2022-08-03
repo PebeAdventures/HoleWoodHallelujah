@@ -1,32 +1,21 @@
 ﻿namespace TvSeriesApi.Controllers
 {
-    [Route("api/tvseries")]
+    [Route("api/TvSeries")]
     [ApiController]
     public class TVSeriesControllers : ControllerBase
     {
-        private readonly ITVSeriesService _tvSeriesService;
+        private ITVSeriesService _tvSeriesService;
 
         public TVSeriesControllers(ITVSeriesService tvSeriesService)
         {
             _tvSeriesService = tvSeriesService;
         }
 
-        ////GET api/tvseries
-        //[SwaggerOperation(Summary = "Get all TV series")]
-        //[HttpGet]
-        //public async Task<IActionResult> GetAllSeriesAsync()
-        //{
-        //    var operationResult = await _tvSeriesService.GetAllSeriesAsync();
-        //    if (operationResult.Status == OperationStatus.Fail)
-        //    {
-        //        return NotFound(operationResult.ErrorMessage);
-        //    }
-        //    return Ok(operationResult.Value);
-        //}
+
 
 
         //GET api/tvseries
-        [SwaggerOperation(Summary = "Get all TV series")]
+        // [SwaggerOperation(Summary = "Get all TV series")]
         [HttpGet]
         public async Task<IActionResult> GetAllSeriesAsync()
         {
