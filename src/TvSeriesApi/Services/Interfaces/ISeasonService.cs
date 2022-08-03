@@ -2,11 +2,11 @@
 {
     public interface ISeasonService
     {
-        public Task<SeasonReadDTO> GetAllSeasonBySeriesAsync(int id);
-        public Task<SeasonReadDTO> GetSeasonByIdFromSeriesAsync(int idSeries, int idSeason);
-        public Task<SeasonCreateDTO> AddSeasonAsync(SeasonCreateDTO seasonCreateDTO, int idSeries);
-        public Task<SeasonUpdateDTO> EditSeasonAync(SeasonUpdateDTO seasonUpdateDTO, int idSeries);
-        public Task<SeasonReadDTO> DeleteSeasonAsync(int id);
-
+        Task<OperationResult>CreateSeason(SeasonCreateDTO seasonCreateDTO);
+        Task<OperationResult<IEnumerable<EpisodeReadDTO>>> GetAllEpisodesBySeasonIdAsync(int seasonId);
+        Task<OperationResult<EpisodeReadDTO>> GetEpisodeByIdBySeasonIdAsync(int seasonId, int episodeId);
+        Task<OperationResult> EditSeasonAync(int seasonId, SeasonUpdateDTO seasonUpdateDTO);
+        Task<OperationResult>DeleteSeasonAsync(int id);
+        Task<OperationResult<SeasonReadDTO>> GetSeasonById(int id);
     }
 }
