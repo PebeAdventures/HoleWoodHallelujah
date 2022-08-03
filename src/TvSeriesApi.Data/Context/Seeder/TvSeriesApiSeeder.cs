@@ -20,6 +20,7 @@
             genreList.Add(comedyGenre);
             genreList.Add(crimeFiction);
             builder.Entity<Genre>().HasData(genreList);
+
             //Actors
             //gambit krolowej
             var anyaTaylor = new Actor() { Fullname = "Anya Taylor", Age = 25, TVSeries = new List<TVSeries>(), ActorId = 1 };
@@ -104,7 +105,6 @@
 
             builder.Entity<Episode>().HasData(episodes);
 
-            //   seasonlist.Add(new Season { Episodes=new Episode { Season} })
         }
     }
 }

@@ -17,6 +17,7 @@
             var series = await _tvSeriesService.GetAllSeriesAsync();
             return Ok(series);
         }
+
         //GET api/tvseries/{id}
         [SwaggerOperation(Summary = "Get TV series by id")]
         [HttpGet("{id}", Name = "GetSeriesByIdAsync")]

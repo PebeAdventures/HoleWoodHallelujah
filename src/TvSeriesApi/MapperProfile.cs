@@ -10,7 +10,7 @@
             CreateMap<ActorUpdateDTO, Actor>();
 
             CreateMap<Episode, EpisodeReadDTO>()
-                .ForMember(e => e.Season, opt => opt.MapFrom<EpisodeSeasonNameResolver>());
+               .ForMember(e => e.Season, opt => opt.MapFrom<EpisodeSeasonNameResolver>());
             CreateMap<EpisodeCreateDTO, Episode>();
             CreateMap<EpisodeUpdateDTO, Episode>();
 
@@ -23,8 +23,8 @@
             CreateMap<SeasonUpdateDTO, Season>();
 
             CreateMap<TVSeries, TVSeriesReadDTO>();
-            CreateMap<TVSeriesCreateDTO, TVSeries>();
-            CreateMap<TVSeriesUpdateDTO, TVSeries>();
+            // CreateMap<TVSeriesCreateDTO, TVSeries>();
+            // CreateMap<TVSeriesUpdateDTO, TVSeries>();
         }
     }
 }
