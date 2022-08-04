@@ -36,17 +36,7 @@
             return NotFound();
         }
 
-        //GET api/actors/{id}/TvSeries
-        [SwaggerOperation(Summary = "Get specific Actor with TvSeries")]
-        [HttpGet("{id}/TvSeries")]
-        public async Task<IActionResult> GetActorWithTvSeriesByIdAsync(int id)
-        {
-            var actor = await _actorService.GetActorWithTvSeries(id);
-            if (actor is not null) return Ok(actor);
-            return NotFound();
-        }
 
-        // Add new Actor
         [SwaggerOperation(Summary = "Create new Actor")]
         [HttpPost]
         public async Task<IActionResult> AddAsync(ActorCreateDTO actorDTO)
@@ -55,7 +45,6 @@
             return CreatedAtRoute(nameof(GetAllAsync), new { id = newActor.ActorId }, newActor);
         }
 
-        // Edit specific Actor
         [SwaggerOperation(Summary = "Edit specific Actor")]
         [HttpPost("{id}")]
         public async Task<IActionResult> EditAsync(int id, ActorUpdateDTO actorDTO)
@@ -64,7 +53,6 @@
             return NoContent();
         }
 
-        // Delete Specific Actor
         [SwaggerOperation(Summary = "Delete specific Actor")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteAsync(int id)
