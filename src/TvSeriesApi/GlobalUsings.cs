@@ -12,3 +12,5 @@ global using TvSeriesApi.Services;
 global using TvSeriesApi.Services.Interfaces;
 global using TvSeriesApi.DTO.Genre;
 global using System.ComponentModel.DataAnnotations;
+global using Microsoft.AspNetCore.Authorization;
+global using Microsoft.AspNetCore.Cors;
