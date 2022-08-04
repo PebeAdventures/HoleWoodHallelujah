@@ -43,7 +43,12 @@
         [Route("{id}")]
         public async Task<IActionResult> DeleteEpisodeAsync(int id)
         {
-            await _episodeService.DeleteEpisodeAsync(id);
+            var operationResult = await _episodeService.DeleteEpisodeAsync(id);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return BadRequest(operationResult.ErrorMessage);
+            }
+
             return NoContent();
         }
 

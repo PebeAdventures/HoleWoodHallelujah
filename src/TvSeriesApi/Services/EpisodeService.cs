@@ -28,14 +28,13 @@
         public async Task<OperationResult> DeleteEpisodeAsync(int id)
         {
             var episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
-            _unitOfWork.Episodes.DeleteAsync(episode);
-
-            episode = await _unitOfWork.Episodes.GetEpisodeWithSeasonAsync(id);
 
             if (episode == null)
-                return OperationResult.Success();
+                return OperationResult.Fail("Episode not exist");
 
-            return OperationResult.Fail("Episode not deleted");
+            _unitOfWork.Episodes.DeleteAsync(episode);          
+
+             return OperationResult.Success();
         }
 
         public async Task<OperationResult<List<EpisodeReadDTO>>> GetAllEpisodesAsync()
