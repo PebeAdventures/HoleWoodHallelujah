@@ -11,6 +11,7 @@
             _episodeService = episodeService;
         }
 
+        [SwaggerOperation(Summary = "Get all episodes")]
         [HttpGet]
         public async Task<IActionResult> GetEpisodesAsync()
         {
@@ -23,6 +24,7 @@
             return Ok(operationResult.Value);
         }
 
+        [SwaggerOperation(Summary = "Get episode by id")]
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetEpisodeAsync(int id)
@@ -36,6 +38,7 @@
             return Ok(operationResult.Value);
         }
 
+        [SwaggerOperation(Summary = "Delete episode")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteEpisodeAsync(int id)
@@ -44,6 +47,7 @@
             return NoContent();
         }
 
+        [SwaggerOperation(Summary = "Create episode")]
         [HttpPost]
         public async Task<IActionResult> CreateEpisodeAsync(EpisodeCreateDTO episode)
         {
@@ -51,6 +55,7 @@
             return Created("", episode);
         }
 
+        [SwaggerOperation(Summary = "Update episode")]
         [HttpPut]
         [Route("{id}")]
         public async Task<IActionResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
