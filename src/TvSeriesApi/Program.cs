@@ -1,8 +1,14 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using System.Text;
 using TvSeriesApi;
 using TvSeriesApi.Data.Context;
 using TvSeriesApi.Data.DAL.Interfaces;
 using TvSeriesApi.Data.DAL.Repositories;
+
+using Serilog;
+
 using TvSeriesApi.Profiles;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -28,6 +34,7 @@ builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
 builder.Services.AddScoped<IEpisodeRepository, EpisodeRepository>();
 builder.Services.AddScoped<ISeasonRepository, SeasonRepository>();
 builder.Services.AddScoped<IEpisodeService, EpisodeService>();
+builder.Services.AddScoped<IGenreService, GenreService>();
 builder.Services.AddScoped<ITVSeriesService, TVSeriesService>();
 builder.Services.AddScoped<IActorService, ActorService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -38,6 +45,20 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c => c.EnableAnnotations());
 var mapper = mapConfig.CreateMapper();
 builder.Services.AddSingleton(mapper);
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters()
+    {
+        ValidateIssuer = false,
+        ValidateAudience = false,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
+    };
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

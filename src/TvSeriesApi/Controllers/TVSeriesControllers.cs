@@ -24,7 +24,7 @@
             {
                 return NotFound(operationResult.ErrorMessage);
             }
-            return Ok(operationResult);
+            return Ok(operationResult.Value);
         }
 
 
