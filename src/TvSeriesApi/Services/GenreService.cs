@@ -1,6 +1,4 @@
-﻿using TvSeriesApi.Data.DAL.Interfaces;
-
-namespace TvSeriesApi.Services
+﻿namespace TvSeriesApi.Services
 {
     public class GenreService : IGenreService
     {
