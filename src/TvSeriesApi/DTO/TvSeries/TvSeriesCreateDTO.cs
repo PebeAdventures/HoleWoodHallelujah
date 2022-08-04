@@ -2,5 +2,6 @@
 {
     public class TVSeriesCreateDTO
     {
+        public int ActorId { get; set; }
     }
 }

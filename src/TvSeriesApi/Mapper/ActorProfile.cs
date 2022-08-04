@@ -2,11 +2,15 @@
 {
     public class ActorProfile : Profile
     {
+
         public ActorProfile()
         {
-            CreateMap<Actor, ActorReadDTO>();
+            CreateMap<Actor, ActorReadDTO>()
+                .ForMember(tv => tv.TVSeriesName, opt => opt.MapFrom(x => x.TVSeries.Select(x => x.Name)));
+
             CreateMap<Actor, ActorWithTvSeriesDTO>()
-                .ForMember(tv => tv.TvSeriesName, act => act.MapFrom(src => src.TVSeries));
+                .ForMember(tv => tv.TvSeriesName, opt => opt.MapFrom(x => x.TVSeries.Select(x => x.Name)));
+
             CreateMap<ActorCreateDTO, Actor>();
             CreateMap<ActorUpdateDTO, Actor>();
         }

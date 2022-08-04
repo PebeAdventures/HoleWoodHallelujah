@@ -1,9 +1,8 @@
-﻿using TvSeriesApi.Data.Entities;
-
-namespace TvSeriesApi.Data.DAL.Interfaces
+﻿namespace TvSeriesApi.Data.DAL.Interfaces
 {
     public interface IActorRepository : IBaseRepository<Actor>
     {
+        Task<List<Actor>> GetAllActorsAsync();
         Task<Actor> GetActorByIdAsync(int id);
     }
 }
