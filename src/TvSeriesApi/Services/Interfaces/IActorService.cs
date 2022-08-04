@@ -7,5 +7,6 @@
         Task<ActorCreateDTO> AddActorAsync(ActorCreateDTO actorDTO);
         Task DeleteActorAsync(int id);
         Task EditActorAsync(int id, ActorUpdateDTO actorDTO);
+        Task<ActorWithTvSeriesDTO> GetActorWithTvSeries(int id);
     }
 }
