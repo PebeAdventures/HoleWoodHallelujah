@@ -1,4 +1,6 @@
-﻿namespace TvSeriesApi.Profiles
+﻿using TvSeriesApi.Data.Helpers;
+
+namespace TvSeriesApi.Profiles
 {
     public class GenreProfile : Profile
     {
@@ -7,6 +9,7 @@
             CreateMap<Genre, GenreReadDTO>();
             CreateMap<GenreCreateDTO, Genre>();
             CreateMap<GenreUpdateDTO, Genre>();
+            CreateMap<PagedList<Genre>, PagedGenreDto>().ForMember(dest => dest.Genres, act => act.MapFrom(src => src.ToList()));
         }
     }
 }
