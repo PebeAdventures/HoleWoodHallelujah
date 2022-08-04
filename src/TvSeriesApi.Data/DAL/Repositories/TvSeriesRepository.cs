@@ -11,9 +11,16 @@ namespace TvSeriesApi.Data.DAL.Repositories
             _context = tvSeriesApiContext;
         }
 
+
+        public async Task<IEnumerable<TVSeries>> GetAllTvSeasonsAsync()
+        {
+            return await _context.TVSeries.Include(e => e.Genre).Include(e => e.Cast).ToListAsync();
+        }
+
+
         public async Task<TVSeries> GetTvSeasonAsync(int id)
         {
-            return await _context.TVSeries.FirstOrDefaultAsync(e => e.TVSeriesId == id);
+            return await _context.TVSeries.Include(e => e.Genre).FirstOrDefaultAsync(e => e.TVSeriesId == id);
         }
 
     }

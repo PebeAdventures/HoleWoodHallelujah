@@ -1,4 +1,4 @@
-﻿namespace TvSeriesApi.DTO.Genre
+﻿namespace TvSeriesApi.DTO.Genres
 {
     public class GenreReadDTO
     {

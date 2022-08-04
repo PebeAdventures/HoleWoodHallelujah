@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace TvSeriesApi.DTO.Genre
+﻿namespace TvSeriesApi.DTO.Genre
 {
     public class GenreUpdateDTO
     {
