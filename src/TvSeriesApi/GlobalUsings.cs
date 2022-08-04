@@ -10,3 +10,5 @@ global using TvSeriesApi.DTO.Seasons;
 global using TvSeriesApi.DTO.TvSeries;
 global using TvSeriesApi.Services;
 global using TvSeriesApi.Services.Interfaces;
+global using TvSeriesApi.DTO.Genre;
+global using System.ComponentModel.DataAnnotations;

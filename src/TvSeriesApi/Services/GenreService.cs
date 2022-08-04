@@ -1,6 +1,4 @@
-﻿using TvSeriesApi.DTO.Genre;
-
-namespace TvSeriesApi.Services
+﻿namespace TvSeriesApi.Services
 {
     public class GenreService : IGenreService
     {
