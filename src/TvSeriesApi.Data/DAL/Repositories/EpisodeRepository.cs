@@ -31,5 +31,15 @@ namespace TvSeriesApi.Data.DAL.Repositories
             return await _context.Episodes.Include(e => e.Season).ToListAsync();
         }
 
+        public override async Task<Episode> AddAsync(Episode entity)
+        {
+            var addedElement = await _context.Set<Episode>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return await _context.Episodes
+                .Include(e => e.Season)
+                .Where(e => e.EpisodeId == addedElement.Entity.EpisodeId)
+                .FirstOrDefaultAsync();
+        }
+
     }
 }
