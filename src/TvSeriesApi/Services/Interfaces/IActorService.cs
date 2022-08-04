@@ -4,7 +4,7 @@
     {
         Task<IEnumerable<ActorReadDTO>> GetAllActorsAsync();
         Task<ActorReadDTO> GetActorByIdAsync(int id);
-        Task<ActorReadDTO> AddActorAsync(ActorCreateDTO actorDTO);
+        Task<ActorCreateDTO> AddActorAsync(ActorCreateDTO actorDTO);
         Task DeleteActorAsync(int id);
         Task EditActorAsync(int id, ActorUpdateDTO actorDTO);
     }
