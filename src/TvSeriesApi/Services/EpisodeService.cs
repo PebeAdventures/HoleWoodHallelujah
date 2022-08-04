@@ -11,11 +11,18 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult>CreateEpisode(EpisodeCreateDTO episodeDTO)
+        public async Task<OperationResult<EpisodeReadDTO>> CreateEpisode(EpisodeCreateDTO episodeDTO)
         {
-            var episode = _mapper.Map<Episode>(episodeDTO);
-            await _unitOfWork.Episodes.AddAsync(episode);
-            return OperationResult.Success();
+            if (string.IsNullOrEmpty(episodeDTO.Name))
+            {
+                return OperationResult<EpisodeReadDTO>.Fail("Name can not be empty");
+            } else if (episodeDTO.SeasonId == null)
+            {
+                return OperationResult<EpisodeReadDTO>.Fail("SeasonId can not be empty");
+            }
+            var newEpisode = _mapper.Map<Episode>(episodeDTO);
+            var insertedEpisode = await _unitOfWork.Episodes.AddAsync(newEpisode);
+            return OperationResult<EpisodeReadDTO>.Success(_mapper.Map<EpisodeReadDTO>(insertedEpisode));
         }
 
         public async Task<OperationResult> DeleteEpisodeAsync(int id)

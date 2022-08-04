@@ -15,7 +15,7 @@ namespace TvSeriesApi.Data.DAL.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync() => await _context.Set<T>().ToListAsync();
 
-        public async Task<T> AddAsync(T entity)
+        public virtual async Task<T> AddAsync(T entity)
         {
             var addedElement = await _context.Set<T>().AddAsync(entity);
             await _context.SaveChangesAsync();
