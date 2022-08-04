@@ -1,6 +1,4 @@
-﻿using TvSeriesApi.Data.Context;
-
-namespace TvSeriesApi.Data.DAL.Repositories
+﻿namespace TvSeriesApi.Data.DAL.Repositories
 {
     public class TvSeriesRepository : BaseRepository<TVSeries>, ITvSeriesRepository
     {

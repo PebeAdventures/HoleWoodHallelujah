@@ -76,7 +76,7 @@
             tvSeriesList.Add(new TVSeries() { GenreId = 3, Name = "Branczo", Year = 2022, TVSeriesId = 3 });
             builder.Entity<TVSeries>().HasData(tvSeriesList);
 
-
+            // var actorTvSeries = new List<ActorTvSeries>
             //@SEASON
             List<Season> seasons = new List<Season>();
 

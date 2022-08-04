@@ -1,4 +1,6 @@
-﻿namespace TvSeriesApi.Services.Interfaces
+﻿using TvSeriesApi.DTO.Genre;
+
+namespace TvSeriesApi.Services.Interfaces
 {
     public interface IGenreService
     {
