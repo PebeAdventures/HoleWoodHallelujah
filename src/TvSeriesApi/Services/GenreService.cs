@@ -1,4 +1,4 @@
-﻿using TvSeriesApi.Data.DAL.Interfaces;
+﻿using TvSeriesApi.DTO.Genre;
 
 namespace TvSeriesApi.Services
 {

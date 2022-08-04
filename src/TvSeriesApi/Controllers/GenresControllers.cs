@@ -1,4 +1,6 @@
-﻿namespace TvSeriesApi.Controllers
+﻿using TvSeriesApi.DTO.Genre;
+
+namespace TvSeriesApi.Controllers
 {
     [Route("api/Genre")]
     [ApiController]
