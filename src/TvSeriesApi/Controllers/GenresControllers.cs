@@ -1,7 +1,10 @@
-﻿using TvSeriesApi.DTO.Genre;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace TvSeriesApi.Controllers
 {
+    [Authorize]
+    [EnableCors("corsapp")]
     [Route("api/Genre")]
     [ApiController]
     public class GenresControllers : ControllerBase
@@ -14,6 +17,7 @@ namespace TvSeriesApi.Controllers
         }
 
         //GET api/genres
+        [EnableCors]
         [SwaggerOperation(Summary = "Get all genres")]
         [HttpGet]
         public async Task<IActionResult> GetAllGenresAsync()

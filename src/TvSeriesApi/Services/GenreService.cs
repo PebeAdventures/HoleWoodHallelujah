@@ -30,7 +30,6 @@
                 return OperationResult<GenreReadDTO>.Fail("There is no Genre with provided Id");
             }
             return OperationResult<GenreReadDTO>.Success(_mapper.Map<GenreReadDTO>(genre));
-            // return _mapper.Map<GenreReadDTO>(genre);
         }
 
         public async Task<OperationResult<GenreReadDTO>> AddGenreAsync(GenreCreateDTO newGenreDto)
