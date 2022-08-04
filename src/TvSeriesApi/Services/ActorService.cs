@@ -17,7 +17,7 @@ namespace TvSeriesApi.Services
 
         public async Task<IEnumerable<ActorReadDTO>> GetAllActorsAsync()
         {
-            var actors = await _unitOfWork.Actors.GetAllAsync(); // można zmienic na metode Actor'a
+            var actors = await _unitOfWork.Actors.GetAllAsync(); 
             return _mapper.Map<IEnumerable<ActorReadDTO>>(actors);
         }
 
@@ -47,10 +47,5 @@ namespace TvSeriesApi.Services
             await _unitOfWork.Actors.DeleteAsync(actor);
         }
 
-        public async Task<ActorWithTvSeriesDTO> GetActorWithTvSeries(int id)
-        {
-            var actor = await _unitOfWork.Actors.GetActorByIdAsync(id);
-            return _mapper.Map<ActorWithTvSeriesDTO>(actor);
-        }
     }
 }
