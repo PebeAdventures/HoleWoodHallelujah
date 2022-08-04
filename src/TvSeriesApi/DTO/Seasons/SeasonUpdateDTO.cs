@@ -2,5 +2,6 @@
 {
     public class SeasonUpdateDTO
     {
+        public string Name { get; set; }
     }
 }
