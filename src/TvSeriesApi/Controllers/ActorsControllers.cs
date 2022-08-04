@@ -1,77 +1,64 @@
 ﻿namespace TvSeriesApi.Controllers
 {
-    [Route("api/actors")]
+    [Route("api/Actors")]
     [ApiController]
     public class ActorsControllers : ControllerBase
     {
-        /*private readonly IActorService _actorService;
-        public ActorsControllers()
+        private readonly IActorService _actorService;
+        public ActorsControllers(IActorService actorService)
         {
-
+            _actorService = actorService;
         }
 
         //GET api/actors
         [SwaggerOperation(Summary = "Get all actors")]
         [HttpGet]
-        public async Task<IActionResult> GetAllActorsAsync()
+        public async Task<IActionResult> GetAllAsync()
         {
             var actors = await _actorService.GetAllActorsAsync();
+            if (actors == null)
+            {
+                return NotFound();
+            }
             return Ok(actors);
         }
 
-        //GET api/actors/{id}
-        [SwaggerOperation(Summary = "Get actor by id")]
-        [HttpGet("{id}", Name = "GetActorByIdAsync")]
-        public async Task<IActionResult> GetActorByIdAsync(int id)
+
+        [SwaggerOperation(Summary = "Retrieves specific Artist")]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetByIdAsync(int id)
         {
             var actor = await _actorService.GetActorByIdAsync(id);
-            return Ok(actor);
+            if (actor is not null)
+            {
+                return Ok(actor);
+            }
+            return NotFound();
         }
 
-        //GET api/actors/{name}
-        [SwaggerOperation(Summary = "Get actor by name")]
-        [HttpGet("{name}", Name = "GetActorByName")]
-        public async Task<IActionResult> GetActorByName(string name)
-        {
-            var actor = await _actorService.GetActorByName(name);
-            return Ok(actor);
-        }
 
-        //POST api/actors
-        [SwaggerOperation(Summary = "Create actor by DTO data")]
+        [SwaggerOperation(Summary = "Create new Actor")]
         [HttpPost]
-        public async Task<IActionResult> CreateActorAsync(ActorCreateDTO actorCreateDTO)
+        public async Task<IActionResult> AddAsync(ActorCreateDTO actorDTO)
         {
-            var actorToCreate = await _actorService.AddActorAsync(actorCreateDTO);
-            return Ok(actorToCreate);
+            var newActor = await _actorService.AddActorAsync(actorDTO);
+            return CreatedAtRoute(nameof(GetAllAsync), new { id = newActor.ActorId }, newActor);
         }
 
-        //POST api/actors
-        [SwaggerOperation(Summary = "Create actor by name")]
-        [HttpPost]
-        public async Task<IActionResult> CreateActorByNameAsync(string actorToAdd)
+        [SwaggerOperation(Summary = "Edit specific Actor")]
+        [HttpPost("{id}")]
+        public async Task<IActionResult> EditAsync(int id, ActorUpdateDTO actorDTO)
         {
-            var actorToUpdate = await _actorService.AddActorByNameAsync(actorToAdd);
-            return Ok(actorToUpdate);
-        }
-
-        //PUT api/actors/{id}
-        [SwaggerOperation(Summary = "Update actor by id")]
-        [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateActorById(int id, ActorUpdateDTO actorUpdateDTO)
-        {
-            await _actorService.EditActorAsync(id, actorUpdateDTO);
+            await _actorService.EditActorAsync(id, actorDTO);
             return NoContent();
         }
 
-        //DELETE api/actors/{id}
-        [SwaggerOperation(Summary = "Delete actor by id")]
+        [SwaggerOperation(Summary = "Delete specific Actor")]
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteActorById(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
             await _actorService.DeleteActorAsync(id);
             return NoContent();
-
-        }*/
+        }
     }
 }
