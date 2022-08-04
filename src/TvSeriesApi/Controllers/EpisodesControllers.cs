@@ -11,6 +11,7 @@
             _episodeService = episodeService;
         }
 
+        [SwaggerOperation(Summary = "Get all episodes")]
         [HttpGet]
         public async Task<IActionResult> GetEpisodesAsync()
         {
@@ -23,6 +24,7 @@
             return Ok(operationResult.Value);
         }
 
+        [SwaggerOperation(Summary = "Get episode by id")]
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetEpisodeAsync(int id)
@@ -36,6 +38,7 @@
             return Ok(operationResult.Value);
         }
 
+        [SwaggerOperation(Summary = "Delete episode")]
         [HttpDelete]
         [Route("{id}")]
         public async Task<IActionResult> DeleteEpisodeAsync(int id)
@@ -44,18 +47,25 @@
             return NoContent();
         }
 
+        [SwaggerOperation(Summary = "Create episode")]
         [HttpPost]
-        public async Task<IActionResult> CreateEpisodeAsync(EpisodeCreateDTO episode)
+        public async Task<IActionResult> CreateEpisodeAsync(EpisodeCreateDTO episodeDTO)
         {
-            await _episodeService.CreateEpisode(episode);
-            return Created("", episode);
+            var operationResult = await _episodeService.CreateEpisode(episodeDTO);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return BadRequest(operationResult.ErrorMessage);
+            }
+            var newEpisode = operationResult.Value;
+            return Created($"api/songs/{newEpisode.EpisodeId}", newEpisode);
         }
 
+        [SwaggerOperation(Summary = "Update episode")]
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
+        public async Task<IActionResult> UpdateEpisodeAsync(int id, EpisodeUpdateDTO episode)
         {
-            var operationResult = await _episodeService.UpdateEpisodeAsync(episodeId, episode);
+            var operationResult = await _episodeService.UpdateEpisodeAsync(id, episode);
 
             if (operationResult.Status == OperationStatus.Fail)
             {
