@@ -10,6 +10,17 @@
             _mapper = mapper;
         }
 
+        public async Task<OperationResult<List<SeasonReadDTO>>> GetAllSeasonsAsync()
+        {
+            var seasonsFromDB = await _unitOfWork.Seasons.GetAllAsync();
+            if (seasonsFromDB == null)
+            {
+                return OperationResult<List<SeasonReadDTO>>.Fail("No seasons in data");
+            }
+            var seasonsDTO = _mapper.Map<List<Season>, List<SeasonReadDTO>>(seasonsFromDB.ToList());
+            return OperationResult<List<SeasonReadDTO>>.Success(seasonsDTO);
+        }
+
         public async Task<OperationResult<SeasonReadDTO>> GetSeasonById(int seasonId)
         {
             var seasonFromDB = await _unitOfWork.Seasons.GetSeasonByIdAsync(seasonId);
@@ -20,15 +31,15 @@
             var seasonDTO = _mapper.Map<SeasonReadDTO>(seasonFromDB);
             return OperationResult<SeasonReadDTO>.Success(seasonDTO);
         }
-        public async Task<OperationResult<IEnumerable<EpisodeReadDTO>>> GetAllEpisodesBySeasonIdAsync(int seasonId)
+        public async Task<OperationResult<List<EpisodeReadDTO>>> GetAllEpisodesBySeasonIdAsync(int seasonId)
         {
             var seasonFromDB = await _unitOfWork.Seasons.GetSeasonByIdAsync(seasonId);
             if (seasonFromDB == null)
             {
-                return OperationResult<IEnumerable<EpisodeReadDTO>>.Fail("Season not exist");
+                return OperationResult<List<EpisodeReadDTO>>.Fail("Season not exist");
             }
-            var episodes = seasonFromDB.Episodes;
-            var episodesDTO = _mapper.Map<IEnumerable<EpisodeReadDTO>>(episodes);
+            var episodes = seasonFromDB.Episodes.ToList();
+            var episodesDTO = _mapper.Map<List<Episode>,List<EpisodeReadDTO>>(episodes);
 
             return OperationResult<IEnumerable<EpisodeReadDTO>>.Success(episodesDTO);
 
@@ -83,6 +94,5 @@
             _unitOfWork.Seasons.DeleteAsync(seasonFromDB);
             return OperationResult.Success();
         }
-
     }
 }

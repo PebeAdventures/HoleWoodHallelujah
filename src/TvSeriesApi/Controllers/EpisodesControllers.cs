@@ -43,24 +43,34 @@
         [Route("{id}")]
         public async Task<IActionResult> DeleteEpisodeAsync(int id)
         {
-            await _episodeService.DeleteEpisodeAsync(id);
+            var operationResult = await _episodeService.DeleteEpisodeAsync(id);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return BadRequest(operationResult.ErrorMessage);
+            }
+
             return NoContent();
         }
 
         [SwaggerOperation(Summary = "Create episode")]
         [HttpPost]
-        public async Task<IActionResult> CreateEpisodeAsync(EpisodeCreateDTO episode)
+        public async Task<IActionResult> CreateEpisodeAsync(EpisodeCreateDTO episodeDTO)
         {
-            await _episodeService.CreateEpisode(episode);
-            return Created("", episode);
+            var operationResult = await _episodeService.CreateEpisode(episodeDTO);
+            if (operationResult.Status == OperationStatus.Fail)
+            {
+                return BadRequest(operationResult.ErrorMessage);
+            }
+            var newEpisode = operationResult.Value;
+            return Created($"api/songs/{newEpisode.EpisodeId}", newEpisode);
         }
 
         [SwaggerOperation(Summary = "Update episode")]
         [HttpPut]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateEpisodeAsync(int episodeId, EpisodeUpdateDTO episode)
+        public async Task<IActionResult> UpdateEpisodeAsync(int id, EpisodeUpdateDTO episode)
         {
-            var operationResult = await _episodeService.UpdateEpisodeAsync(episodeId, episode);
+            var operationResult = await _episodeService.UpdateEpisodeAsync(id, episode);
 
             if (operationResult.Status == OperationStatus.Fail)
             {

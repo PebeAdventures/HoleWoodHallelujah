@@ -1,5 +1,7 @@
 ﻿using TvSeriesApi.Data.Helpers;
 
+using TvSeriesApi.DTO.Genre;
+
 namespace TvSeriesApi.Profiles
 {
     public class GenreProfile : Profile

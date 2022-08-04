@@ -1,8 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
-using TvSeriesApi.Data.Helpers;
-
-namespace TvSeriesApi.Controllers
+﻿namespace TvSeriesApi.Controllers
 {
     [EnableCors("corsapp")]
     [Route("api/Genre")]

@@ -8,7 +8,7 @@
 
         public string Genre { get; set; }
 
-        public List<string> Cast { get; set; }
+        public IEnumerable<string> Cast { get; set; }
 
 
     }
