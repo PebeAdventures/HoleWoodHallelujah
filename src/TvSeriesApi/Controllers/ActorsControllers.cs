@@ -1,5 +1,7 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Authorize]
+    [EnableCors("corsapp")]
     [Route("api/Actors")]
     [ApiController]
     public class ActorsControllers : ControllerBase
