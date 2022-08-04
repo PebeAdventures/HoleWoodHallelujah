@@ -29,7 +29,7 @@
 
         public async Task<OperationResult<IEnumerable<TVSeriesReadDTO>>> GetAllSeriesAsync()
         {
-            var tvSeries = await _unitOfWork.TvSeries.GetAllAsync();
+            var tvSeries = await _unitOfWork.TvSeries.GetAllTvSeasonsAsync();
             if (tvSeries == null)
                 return OperationResult<IEnumerable<TVSeriesReadDTO>>.Fail("Tv Series not exist");
 
