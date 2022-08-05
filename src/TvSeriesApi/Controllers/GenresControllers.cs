@@ -1,5 +1,6 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Authorize]
     [EnableCors("corsapp")]
     [Route("api/Genre")]
     [ApiController]
