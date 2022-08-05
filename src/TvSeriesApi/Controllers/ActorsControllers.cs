@@ -7,9 +7,11 @@
     public class ActorsControllers : ControllerBase
     {
         private readonly IActorService _actorService;
-        public ActorsControllers(IActorService actorService)
+        private readonly ILogger<ActorsControllers> _logger;
+        public ActorsControllers(IActorService actorService, ILogger<ActorsControllers> logger)
         {
             _actorService = actorService;
+            _logger = logger;
         }
 
         [SwaggerOperation(Summary = "Get all actors")]
@@ -19,8 +21,11 @@
             var actors = await _actorService.GetAllActorsAsync();
             if (actors == null)
             {
+                _logger.LogInformation(NotFound().StatusCode.ToString());
                 return NotFound();
             }
+
+            _logger.LogInformation(Ok().StatusCode.ToString());
             return Ok(actors);
         }
 
@@ -32,8 +37,11 @@
             var actor = await _actorService.GetActorByIdAsync(id);
             if (actor is not null)
             {
+                _logger.LogInformation(Ok().StatusCode.ToString());
                 return Ok(actor);
             }
+
+            _logger.LogInformation(NotFound().StatusCode.ToString());
             return NotFound();
         }
 
@@ -43,6 +51,7 @@
         public async Task<IActionResult> AddAsync(ActorCreateDTO actorDTO)
         {
             var newActor = await _actorService.AddActorAsync(actorDTO);
+            _logger.LogInformation(CreatedAtRoute(nameof(GetAllAsync), new { id = newActor.ActorId }, newActor).ToString());
             return CreatedAtRoute(nameof(GetAllAsync), new { id = newActor.ActorId }, newActor);
         }
 
@@ -51,6 +60,7 @@
         public async Task<IActionResult> EditAsync(int id, ActorUpdateDTO actorDTO)
         {
             await _actorService.EditActorAsync(id, actorDTO);
+            _logger.LogInformation(NoContent().StatusCode.ToString());
             return NoContent();
         }
 
@@ -59,6 +69,7 @@
         public async Task<IActionResult> DeleteAsync(int id)
         {
             await _actorService.DeleteActorAsync(id);
+            _logger.LogInformation(NoContent().StatusCode.ToString());
             return NoContent();
         }
 
@@ -67,7 +78,13 @@
         public async Task<IActionResult> GetActorWithTvSeriesByIdAsync(int id)
         {
             var actor = await _actorService.GetActorWithTvSeries(id);
-            if (actor is not null) return Ok(actor);
+            if (actor is not null)
+            {
+                _logger.LogInformation(Ok().StatusCode.ToString());
+                return Ok(actor);
+            }
+
+            _logger.LogInformation(NotFound().StatusCode.ToString());
             return NotFound();
         }
     }

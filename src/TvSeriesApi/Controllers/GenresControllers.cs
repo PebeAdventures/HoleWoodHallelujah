@@ -8,7 +8,6 @@
     {
         private readonly IGenreService _genreService;
         private readonly ILogger<GenresControllers> _logger;
-
         public GenresControllers(IGenreService genreService, ILogger<GenresControllers> logger)
         {
             _genreService = genreService;
@@ -24,9 +23,11 @@
             var operationResult = await _genreService.GetAllGenresAsync(pageParameters);
             if (operationResult.Status == OperationStatus.Fail)
             {
-                _logger.LogInformation(operationResult.ErrorMessage);
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -38,9 +39,10 @@
             var operationResult = await _genreService.GetGenreByIdAsync(id);
             if (operationResult.Status == OperationStatus.Fail)
             {
-                _logger.LogInformation(operationResult.ErrorMessage);
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -52,10 +54,12 @@
             var operationResult = await _genreService.AddGenreAsync(genreCreateDTO);
             if (operationResult.Status == OperationStatus.Fail)
             {
-                _logger.LogInformation(operationResult.ErrorMessage);
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + BadRequest().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
             var newGenre = operationResult.Value;
+
+            _logger.LogInformation(operationResult.Status.ToString() + " Status " + Created($"api/songs/{newGenre.GenreId}", newGenre));
             return Created($"api/songs/{newGenre.GenreId}", newGenre);
         }
 
@@ -67,9 +71,11 @@
             var operationResult = await _genreService.EditGenreAsync(id, genreUpdateDTO);
             if (operationResult.Status == OperationStatus.Fail)
             {
-                _logger.LogInformation(operationResult.ErrorMessage);
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + BadRequest().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + NoContent().ToString());
             return NoContent();
         }
 
@@ -81,9 +87,10 @@
             var operationResult = await _genreService.DeleteGenreAsync(id);
             if (operationResult.Status == OperationStatus.Fail)
             {
-                _logger.LogInformation(operationResult.ErrorMessage);
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + BadRequest().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
+            _logger.LogInformation(operationResult.Status.ToString() + NoContent().ToString());
             return NoContent();
         }
     }

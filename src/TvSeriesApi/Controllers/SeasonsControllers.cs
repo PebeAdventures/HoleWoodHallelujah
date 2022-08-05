@@ -6,9 +6,11 @@
     public class SeasonsControllers : ControllerBase
     {
         private readonly ISeasonService _seasonService;
-        public SeasonsControllers(ISeasonService seasonService)
+        private readonly ILogger<SeasonsControllers> _logger;
+        public SeasonsControllers(ISeasonService seasonService, ILogger<SeasonsControllers> logger)
         {
             _seasonService = seasonService;
+            _logger = logger;
         }
 
         //GET api/seasons/
@@ -19,8 +21,11 @@
             var operationResult = await _seasonService.GetAllSeasonsAsync();
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -32,8 +37,11 @@
             var operationResult = await _seasonService.GetSeasonById(seasonId);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -45,8 +53,11 @@
             var operationResult = await _seasonService.GetAllEpisodesBySeasonIdAsync(seasonId);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -58,8 +69,11 @@
             var operationResult = await _seasonService.GetEpisodeByIdBySeasonIdAsync(seasonId, episodeId);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -69,6 +83,8 @@
         public async Task<IActionResult> AddNewSeason(SeasonCreateDTO seasonCreateDTO)
         {
             await _seasonService.CreateSeason(seasonCreateDTO);
+
+            _logger.LogInformation(" Status " + NoContent().StatusCode);
             return NoContent();
         }
 
@@ -80,8 +96,11 @@
             var operationResult = await _seasonService.EditSeasonAync(id, seasonUpdateDTO);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
+
+            _logger.LogInformation(operationResult.Status.ToString() + "Status" + NoContent().ToString());
             return NoContent();
         }
         [SwaggerOperation(Summary = "Delete existing season")]
@@ -89,6 +108,7 @@
         public async Task<IActionResult> DeleteExistingSeasonAsync(int id)
         {
             await _seasonService.DeleteSeasonAsync(id);
+            _logger.LogInformation("Status" + NoContent().ToString());
             return NoContent();
         }
     }

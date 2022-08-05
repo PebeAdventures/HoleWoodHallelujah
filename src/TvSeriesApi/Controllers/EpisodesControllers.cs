@@ -1,15 +1,17 @@
 ﻿namespace TvSeriesApi.Controllers
 {
-    [Authorize]
+    //[Authorize]
     [Route("api/Episodes")]
     [ApiController]
     public class EpisodesControllers : ControllerBase
     {
         private IEpisodeService _episodeService;
+        private readonly ILogger<EpisodesControllers> _logger;
 
-        public EpisodesControllers(IEpisodeService episodeService)
+        public EpisodesControllers(IEpisodeService episodeService, ILogger<EpisodesControllers> logger)
         {
             _episodeService = episodeService;
+            _logger = logger;
         }
 
         [SwaggerOperation(Summary = "Get all episodes")]
@@ -19,9 +21,11 @@
             var operationResult = await _episodeService.GetAllEpisodesAsync();
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
                 return NotFound(operationResult.ErrorMessage);
             }
 
+            _logger.LogInformation(operationResult.Status.ToString() + Ok().ToString());
             return Ok(operationResult.Value);
         }
 
@@ -33,9 +37,11 @@
             var operationResult = await _episodeService.GetEpisodeByIdAsync(id);
             if (operationResult.Status == OperationStatus.Fail)
             {
-                return NotFound(operationResult.ErrorMessage);               
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + NotFound().StatusCode);
+                return NotFound(operationResult.ErrorMessage);
             }
 
+            _logger.LogInformation(operationResult.Status.ToString());
             return Ok(operationResult.Value);
         }
 
@@ -47,9 +53,11 @@
             var operationResult = await _episodeService.DeleteEpisodeAsync(id);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + BadRequest().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
 
+            _logger.LogInformation(operationResult.Status.ToString());
             return NoContent();
         }
 
@@ -60,9 +68,12 @@
             var operationResult = await _episodeService.CreateEpisode(episodeDTO);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + BadRequest().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
             var newEpisode = operationResult.Value;
+
+            _logger.LogInformation(operationResult.Status.ToString() + " Status " + Created($"api/songs/{newEpisode.EpisodeId}", newEpisode));
             return Created($"api/songs/{newEpisode.EpisodeId}", newEpisode);
         }
 
@@ -75,9 +86,11 @@
 
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage + " Status " + BadRequest().StatusCode);
                 return BadRequest(operationResult.ErrorMessage);
             }
 
+            _logger.LogInformation(operationResult.Status.ToString());
             return NoContent();
         }
     }

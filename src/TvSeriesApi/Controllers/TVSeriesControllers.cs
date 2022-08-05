@@ -6,10 +6,11 @@
     public class TVSeriesControllers : ControllerBase
     {
         private ITVSeriesService _tvSeriesService;
-
-        public TVSeriesControllers(ITVSeriesService tvSeriesService)
+        private readonly ILogger _logger;
+        public TVSeriesControllers(ITVSeriesService tvSeriesService, ILogger logger)
         {
             _tvSeriesService = tvSeriesService;
+            _logger = logger;
         }
 
 
