@@ -43,5 +43,11 @@
             await _unitOfWork.Actors.DeleteAsync(actor);
         }
 
+        public async Task<ActorWithTvSeriesDTO> GetActorWithTvSeries(int id)
+        {
+            var actor = await _unitOfWork.Actors.GetActorByIdAsync(id);
+            return _mapper.Map<ActorWithTvSeriesDTO>(actor);
+        }
+
     }
 }

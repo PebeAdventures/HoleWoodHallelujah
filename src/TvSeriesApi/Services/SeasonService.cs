@@ -52,16 +52,14 @@
             {
                 return OperationResult<EpisodeReadDTO>.Fail("Season not exist");
             }
-            else
+
+            var episodeFromDB = seasonFromDB.Episodes.Where(e => e.EpisodeId == episodeId).FirstOrDefault();
+            if (episodeFromDB == null)
             {
-                var episodeFromDB = seasonFromDB.Episodes.Where(e => e.EpisodeId == episodeId);
-                if (episodeFromDB == null)
-                {
-                    return OperationResult<EpisodeReadDTO>.Fail("Episode not exist");
-                }
-                var episodeDTO = _mapper.Map<EpisodeReadDTO>(episodeFromDB);
-                return OperationResult<EpisodeReadDTO>.Success(episodeDTO);
+                return OperationResult<EpisodeReadDTO>.Fail("Episode not exist");
             }
+            var episodeDTO = _mapper.Map<EpisodeReadDTO>(episodeFromDB);
+            return OperationResult<EpisodeReadDTO>.Success(episodeDTO);
 
         }
 

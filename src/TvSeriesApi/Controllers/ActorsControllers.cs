@@ -1,5 +1,7 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Authorize]
+    [EnableCors("corsapp")]
     [Route("api/Actors")]
     [ApiController]
     public class ActorsControllers : ControllerBase
@@ -10,7 +12,6 @@
             _actorService = actorService;
         }
 
-        //GET api/actors
         [SwaggerOperation(Summary = "Get all actors")]
         [HttpGet]
         public async Task<IActionResult> GetAllAsync()
@@ -59,6 +60,15 @@
         {
             await _actorService.DeleteActorAsync(id);
             return NoContent();
+        }
+
+        [SwaggerOperation(Summary = "Get specific Actor with TvSeries")]
+        [HttpGet("{id}/TvSeries")]
+        public async Task<IActionResult> GetActorWithTvSeriesByIdAsync(int id)
+        {
+            var actor = await _actorService.GetActorWithTvSeries(id);
+            if (actor is not null) return Ok(actor);
+            return NotFound();
         }
     }
 }
