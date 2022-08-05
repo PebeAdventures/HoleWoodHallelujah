@@ -21,36 +21,46 @@ namespace TvSeriesApi.Tests
         [Test]
         public async Task GetActorByIdAsync_ShouldReturnActor_WhenActorExist()
         {
-            // Arrange
             var actorId = 1;
             var actorName = "Aaron Paul";
             var actorAge = 50;
             List<string> tvSeriesNames = new() {  "Breaking Bad" };
 
-            var actorReadDto = new ActorReadDTO
+            var actor = new ActorReadDTO
             {
                 Age = actorAge,
                 Fullname = actorName,
                 TVSeriesName = tvSeriesNames
             };
 
-            //var actor = new Actor
-            //{
-            //    ActorId = actorId,
-            //    Fullname = actorName,
-            //    Age = actorAge,
-            //    TVSeries = tvSeriesNames;
-            //};
+            var actorUnitOfWork = _actorUnitOfWorkMock.Setup(x => x.Actors.GetActorByIdAsync(actorId)); 
+            var mappedActor = _mapperMock.Setup(x => x.Map<ActorReadDTO>(actorUnitOfWork));
 
-            var actorUnitOfWork = await _actorUnitOfWorkMock.Object.Actors.GetActorByIdAsync(actorId); //.Setup(x => x.Actors.GetActorByIdAsync(actorId));
-            var mappedActor = _mapperMock.Object.Map<ActorReadDTO>(actorUnitOfWork);
-            // Act
-            var actor = await _serviceTested.GetActorByIdAsync(actorId);
+            var actorService = _serviceTested.GetActorByIdAsync(actorId);
+            
+            Assert.That(actorId, Is.EqualTo(actorService.Id));
+        }
 
-            // Assert
-            //Assert.Equals(actor.Fullname, mappedActor.Fullname);
-            Assert.Equals(actorReadDto.Fullname, mappedActor.Fullname);
+        [Test]
+        public async Task GetActorByIdAsync_ShouldReturnActorIsNotNull_WhenActorIsNotNull()
+        {
+            var actorId = 1;
+            var actorName = "JeniferLopez";
+            var actorAge = 60;
+            List<string> tvSeriesNames = new() { "Jery Ho" };
 
+            var actor = new ActorReadDTO
+            {
+                Age = actorAge,
+                Fullname = actorName,
+                TVSeriesName = tvSeriesNames
+            };
+
+            var actorUnitOfWork = _actorUnitOfWorkMock.Setup(x => x.Actors.GetActorByIdAsync(actorId));
+            var mappedActor = _mapperMock.Setup(x => x.Map<ActorReadDTO>(actorUnitOfWork));
+
+            var actorService = _serviceTested.GetActorByIdAsync(actorId);
+            Assert.That(actorService, Is.Not.Null);
         }
     }
 }
