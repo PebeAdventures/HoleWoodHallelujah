@@ -1,5 +1,6 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Authorize]
     [Route("api/seasons")]
     [ApiController]
     public class SeasonsControllers : ControllerBase
