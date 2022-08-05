@@ -10,18 +10,6 @@
             CreateMap<TVSeries, TVSeriesCreateDTO>();
             CreateMap<TVSeries, TVSeriesUpdateDTO>();
         }
-
-        //public class ActorProfile : Profile
-        //{
-        //    public ActorProfile()
-        //    {
-        //        CreateMap<Actor, ActorDTO>()
-        //            .ForMember(dest => dest.Episodes,
-        //            opt => opt.MapFrom<ActorIncludesResolver>());
-
-        //        CreateMap<ActorPostDTO, Actor>();
-        //    }
-        //}
         public class ActorIncludesResolver : IValueResolver<TVSeries, TVSeriesReadDTO, IEnumerable<string>>
         {
             public IEnumerable<string> Resolve(TVSeries source, TVSeriesReadDTO destination, IEnumerable<string> destMember, ResolutionContext context)
