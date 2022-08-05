@@ -9,6 +9,7 @@
             .ForMember(c => c.Cast, opt => opt.MapFrom<ActorIncludesResolver>());
             CreateMap<TVSeries, TVSeriesCreateDTO>();
             CreateMap<TVSeries, TVSeriesUpdateDTO>();
+            CreateMap<TVSeriesCreateDTO, TVSeries>();
         }
         public class ActorIncludesResolver : IValueResolver<TVSeries, TVSeriesReadDTO, IEnumerable<string>>
         {

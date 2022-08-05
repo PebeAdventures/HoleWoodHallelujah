@@ -2,7 +2,7 @@
 {
     public interface ITvSeriesRepository : IBaseRepository<TVSeries>
     {
-        Task<IEnumerable<TVSeries>> GetAllTvSeasonsAsync();
-        Task<TVSeries> GetTvSeasonAsync(int id);
+        Task<IEnumerable<TVSeries>> GetAllSeriesAsync();
+        Task<TVSeries> GetSeriesAsync(int id);
     }
 }

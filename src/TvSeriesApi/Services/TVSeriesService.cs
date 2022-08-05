@@ -10,26 +10,39 @@
             _unitOfWork = unitOfWork;
             _mapper = mapper;
         }
-        public Task<TVSeriesReadDTO> AddSeriesAsync(TVSeriesCreateDTO tvSerie)
+        public async Task<OperationResult> AddSeriesAsync(TVSeriesCreateDTO tvSerie)
         {
-            throw new NotImplementedException();
+            var tvSerieToAdd = _mapper.Map<TVSeries>(tvSerie);
+            await _unitOfWork.TvSeries.AddAsync(tvSerieToAdd);
+            return OperationResult.Success();
         }
 
-
-
-        public Task DeleteSeriesAsync(int id)
+        public async Task<OperationResult> DeleteSeriesAsync(int tvSeriesId)
         {
-            throw new NotImplementedException();
+            var tvSeriesFromDB = await _unitOfWork.TvSeries.GetSeriesAsync(tvSeriesId);
+            if (tvSeriesFromDB == null)
+            {
+                return OperationResult<TVSeriesUpdateDTO>.Fail("TV series not exist");
+            }
+            _unitOfWork.TvSeries.DeleteAsync(tvSeriesFromDB);
+            return OperationResult.Success();
         }
 
-        public Task EditSeriesAsync(int id, TVSeriesUpdateDTO seriesDTO)
+        public async Task<OperationResult> EditSeriesAsync(int tvSeriesId, TVSeriesUpdateDTO seriesDTO)
         {
-            throw new NotImplementedException();
+            var tvSeriesFromDB = await _unitOfWork.TvSeries.GetSeriesAsync(tvSeriesId);
+            if (tvSeriesFromDB == null)
+            {
+                return OperationResult.Fail("Season not exist");
+            }
+            tvSeriesFromDB = _mapper.Map(seriesDTO, tvSeriesFromDB);
+            _unitOfWork.TvSeries.UpdateAsync(tvSeriesFromDB);
+            return OperationResult.Success();
         }
 
         public async Task<OperationResult<IEnumerable<TVSeriesReadDTO>>> GetAllSeriesAsync()
         {
-            var tvSeries = await _unitOfWork.TvSeries.GetAllTvSeasonsAsync();
+            var tvSeries = await _unitOfWork.TvSeries.GetAllSeriesAsync();
             if (tvSeries == null)
                 return OperationResult<IEnumerable<TVSeriesReadDTO>>.Fail("Tv Series not exist");
 
@@ -39,7 +52,7 @@
 
         public async Task<OperationResult<TVSeriesReadDTO>> GetSeriesByIdAsync(int id)
         {
-            var tvSerie = await _unitOfWork.TvSeries.GetTvSeasonAsync(id);
+            var tvSerie = await _unitOfWork.TvSeries.GetSeriesAsync(id);
             if (tvSerie == null)
                 return OperationResult<TVSeriesReadDTO>.Fail("Tv series not exist");
 
