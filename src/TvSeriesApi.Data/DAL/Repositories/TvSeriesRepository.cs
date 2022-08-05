@@ -9,16 +9,15 @@
             _context = tvSeriesApiContext;
         }
 
-
-        public async Task<IEnumerable<TVSeries>> GetAllTvSeasonsAsync()
+        public async Task<IEnumerable<TVSeries>> GetAllSeriesAsync()
         {
             return await _context.TVSeries.Include(e => e.Genre).Include(e => e.Cast).ToListAsync();
         }
 
 
-        public async Task<TVSeries> GetTvSeasonAsync(int id)
+        public async Task<TVSeries> GetSeriesAsync(int id)
         {
-            return await _context.TVSeries.Include(e => e.Genre).FirstOrDefaultAsync(e => e.TVSeriesId == id);
+            return await _context.TVSeries.Include(e => e.Genre).Include(e => e.Seasons).FirstOrDefaultAsync(e => e.TVSeriesId == id);
         }
 
     }

@@ -67,7 +67,7 @@
         {
             var season = _mapper.Map<Season>(seasonCreateDTO);
             await _unitOfWork.Seasons.AddAsync(season);
-            return OperationResult<SeasonCreateDTO>.Success();
+            return OperationResult.Success();
         }
 
         public async Task<OperationResult> EditSeasonAync(int seasonId, SeasonUpdateDTO seasonUpdateDTO)
@@ -87,7 +87,7 @@
             var seasonFromDB = await _unitOfWork.Seasons.GetSeasonByIdAsync(seasonId);
             if (seasonFromDB == null)
             {
-                return OperationResult<SeasonUpdateDTO>.Fail("Season not exist");
+                return OperationResult.Fail("Season not exist");
             }
             _unitOfWork.Seasons.DeleteAsync(seasonFromDB);
             return OperationResult.Success();

@@ -2,6 +2,11 @@
 {
     public class TVSeriesCreateDTO
     {
-        public int ActorId { get; set; }
+        public string Name { get; set; }
+        public int Year { get; set; }
+
+        public string Genre { get; set; }
+
+        public IEnumerable<string> Cast { get; set; }
     }
 }
