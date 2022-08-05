@@ -11,6 +11,7 @@ using Serilog;
 
 using TvSeriesApi.Profiles;
 using Microsoft.OpenApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var mapConfig = new AutoMapper.MapperConfiguration(c =>
@@ -34,7 +35,7 @@ builder.Services.AddCors(p => p.AddPolicy("default", builder =>
 
 builder.Logging.ClearProviders();
 builder.Logging.AddSerilog(logger);
-builder.Services.AddSqlServer<TvSeriesApiContext>(builder.Configuration.GetConnectionString("HollywoodDB"));
+builder.Services.AddSqlServer<TvSeriesApiContext>(builder.Configuration["API:ConnectionString"]);
 builder.Services.AddScoped<IActorRepository, ActorRepository>();
 builder.Services.AddScoped<IGenreRepository, GenreRepository>();
 builder.Services.AddScoped<ITvSeriesRepository, TvSeriesRepository>();
@@ -51,24 +52,23 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
-
 builder.Services.AddSwaggerGen(swagger =>
 {
     swagger.SwaggerDoc("v1", new OpenApiInfo
-        {
-            Version = "v1",
-            Title = "JWT Token Authentication API",
-            Description = "ASP.NET Core 3.1 Web API"
-        });
+    {
+        Version = "v1",
+        Title = "JWT Token Authentication API",
+        Description = "ASP.NET Core 3.1 Web API"
+    });
     swagger.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
-        {
-            Name = "Authorization",
-            Type = SecuritySchemeType.ApiKey,
-            Scheme = "Bearer",
-            BearerFormat = "JWT",
-            In = ParameterLocation.Header,
-            Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
-        });
+    {
+        Name = "Authorization",
+        Type = SecuritySchemeType.ApiKey,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = ParameterLocation.Header,
+        Description = "JWT Authorization header using the Bearer scheme. \r\n\r\n Enter 'Bearer' [space] and then your token in the text input below.\r\n\r\nExample: \"Bearer 12345abcdef\"",
+    });
     swagger.AddSecurityRequirement(new OpenApiSecurityRequirement
         {
             {
@@ -81,7 +81,6 @@ builder.Services.AddSwaggerGen(swagger =>
                         }
                     },
                     new string[] {}
-
             }
         });
     swagger.EnableAnnotations();
