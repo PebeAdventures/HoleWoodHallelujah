@@ -1,6 +1,5 @@
 ﻿namespace TvSeriesApi.Controllers
 {
-    [Authorize]
     [EnableCors("corsapp")]
     [Route("api/Genre")]
     [ApiController]
@@ -17,9 +16,9 @@
         [EnableCors]
         [SwaggerOperation(Summary = "Get all genres")]
         [HttpGet]
-        public async Task<IActionResult> GetAllGenresAsync()
+        public async Task<IActionResult> GetAllGenresAsync([FromQuery] PageParameters pageParameters)
         {
-            var operationResult = await _genreService.GetAllGenresAsync();
+            var operationResult = await _genreService.GetAllGenresAsync(pageParameters);
             if (operationResult.Status == OperationStatus.Fail)
             {
                 return NotFound(operationResult.ErrorMessage);

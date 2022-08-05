@@ -1,4 +1,6 @@
-﻿namespace TvSeriesApi.Services
+﻿using TvSeriesApi.Data.Helpers;
+
+namespace TvSeriesApi.Services
 {
     public class GenreService : IGenreService
     {
@@ -11,15 +13,16 @@
             _mapper = mapper;
         }
 
-        public async Task<OperationResult<IEnumerable<GenreReadDTO>>> GetAllGenresAsync()
+        public async Task<OperationResult<PagedGenreDto>> GetAllGenresAsync(PageParameters pageParameters)
         {
-            var genres = await _unitOfWork.Genres.GetAllAsync();
-            if (genres == null)
+            var genres = _unitOfWork.Genres.GetGenresPaginated(pageParameters);
+            var pagedGenres = await PagedList<Genre>.ToPagedListAsync(genres, pageParameters.PageNumber, pageParameters.PageSize);
+            if (pagedGenres == null || pagedGenres.Count == 0)
             {
-                return OperationResult<IEnumerable<GenreReadDTO>>.Fail("There are no Genres");
+                return OperationResult<PagedGenreDto>.Fail("There are no Genres");
             }
-            var genresDto = _mapper.Map<IEnumerable<GenreReadDTO>>(genres);
-            return OperationResult<IEnumerable<GenreReadDTO>>.Success(genresDto);
+            var gen = _mapper.Map<PagedGenreDto>(pagedGenres);
+            return OperationResult<PagedGenreDto>.Success(gen);
         }
 
         public async Task<OperationResult<GenreReadDTO>> GetGenreByIdAsync(int id)

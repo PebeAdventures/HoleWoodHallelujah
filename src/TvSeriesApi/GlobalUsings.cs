@@ -14,3 +14,4 @@ global using TvSeriesApi.DTO.Genre;
 global using System.ComponentModel.DataAnnotations;
 global using Microsoft.AspNetCore.Authorization;
 global using Microsoft.AspNetCore.Cors;
+global using TvSeriesApi.Data.Helpers;

@@ -1,10 +1,12 @@
-﻿using TvSeriesApi.DTO.Genre;
+﻿using TvSeriesApi.Data.Helpers;
+
+using TvSeriesApi.DTO.Genre;
 
 namespace TvSeriesApi.Services.Interfaces
 {
     public interface IGenreService
     {
-        Task<OperationResult<IEnumerable<GenreReadDTO>>> GetAllGenresAsync();
+        Task<OperationResult<PagedGenreDto>> GetAllGenresAsync(PageParameters pageParameters);
 
         Task<OperationResult<GenreReadDTO>> GetGenreByIdAsync(int id);
 
