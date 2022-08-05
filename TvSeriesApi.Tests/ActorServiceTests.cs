@@ -1,9 +1,4 @@
-﻿using AutoMapper;
-using Moq;
-using TvSeriesApi.Data;
-using TvSeriesApi.Data.Entities;
-using TvSeriesApi.DTO.Actor;
-using TvSeriesApi.Services;
+﻿
 
 namespace TvSeriesApi.Tests
 {
