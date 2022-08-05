@@ -1,15 +1,18 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Authorize]
     [EnableCors("corsapp")]
     [Route("api/Genre")]
     [ApiController]
     public class GenresControllers : ControllerBase
     {
         private readonly IGenreService _genreService;
+        private readonly ILogger<GenresControllers> _logger;
 
-        public GenresControllers(IGenreService genreService)
+        public GenresControllers(IGenreService genreService, ILogger<GenresControllers> logger)
         {
             _genreService = genreService;
+            _logger = logger;
         }
 
         //GET api/genres
@@ -21,6 +24,7 @@
             var operationResult = await _genreService.GetAllGenresAsync(pageParameters);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage);
                 return NotFound(operationResult.ErrorMessage);
             }
             return Ok(operationResult.Value);
@@ -34,6 +38,7 @@
             var operationResult = await _genreService.GetGenreByIdAsync(id);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage);
                 return NotFound(operationResult.ErrorMessage);
             }
             return Ok(operationResult.Value);
@@ -47,6 +52,7 @@
             var operationResult = await _genreService.AddGenreAsync(genreCreateDTO);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage);
                 return BadRequest(operationResult.ErrorMessage);
             }
             var newGenre = operationResult.Value;
@@ -61,6 +67,7 @@
             var operationResult = await _genreService.EditGenreAsync(id, genreUpdateDTO);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage);
                 return BadRequest(operationResult.ErrorMessage);
             }
             return NoContent();
@@ -74,6 +81,7 @@
             var operationResult = await _genreService.DeleteGenreAsync(id);
             if (operationResult.Status == OperationStatus.Fail)
             {
+                _logger.LogInformation(operationResult.ErrorMessage);
                 return BadRequest(operationResult.ErrorMessage);
             }
             return NoContent();

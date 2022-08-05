@@ -1,5 +1,6 @@
 ﻿namespace TvSeriesApi.Controllers
 {
+    [Authorize]
     [Route("api/TvSeries")]
     [ApiController]
     public class TVSeriesControllers : ControllerBase

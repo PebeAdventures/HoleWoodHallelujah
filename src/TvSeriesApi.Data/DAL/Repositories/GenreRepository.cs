@@ -15,10 +15,6 @@ namespace TvSeriesApi.Data.DAL.Repositories
 
         public async Task<Genre> GetGenreByIdAsync(int id) => await _context.Genres.Where(g => g.GenreId == id).FirstOrDefaultAsync();
 
-        public IQueryable<Genre> GetGenresPaginated(PageParameters ownerParameters) => _context.Genres
-                .OrderBy(on => on.Name)
-                .Skip((ownerParameters.PageNumber - 1) * ownerParameters.PageSize)
-                .Take(ownerParameters.PageSize)
-                .AsQueryable();
+        public IQueryable<Genre> GetGenresPaginated() => _context.Genres.AsQueryable();
     }
 }

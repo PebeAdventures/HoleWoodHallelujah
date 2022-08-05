@@ -15,7 +15,7 @@ namespace TvSeriesApi.Services
 
         public async Task<OperationResult<PagedGenreDto>> GetAllGenresAsync(PageParameters pageParameters)
         {
-            var genres = _unitOfWork.Genres.GetGenresPaginated(pageParameters);
+            var genres = _unitOfWork.Genres.GetGenresPaginated();
             var pagedGenres = await PagedList<Genre>.ToPagedListAsync(genres, pageParameters.PageNumber, pageParameters.PageSize);
             if (pagedGenres == null || pagedGenres.Count == 0)
             {
