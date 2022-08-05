@@ -9,44 +9,48 @@ namespace TvSeriesApi.Tests
 {
     public class ActorServiceTests
     {
-        //private readonly ActorService _serviceTested; 
-        //private readonly Mock<IUnitOfWork> _actorUnitOfWorkMock = new();
-        //private readonly Mock<IMapper> _mapperMock = new();
+        private readonly ActorService _serviceTested;
+        private readonly Mock<IUnitOfWork> _actorUnitOfWorkMock = new();
+        private readonly Mock<IMapper> _mapperMock = new();
 
-        //public ActorServiceTests()
-        //{
-        //    _serviceTested = new ActorService(_actorUnitOfWorkMock.Object, _mapperMock.Object);
-        //}
+        public ActorServiceTests()
+        {
+            _serviceTested = new ActorService(_actorUnitOfWorkMock.Object, _mapperMock.Object);
+        }
 
-        //[Test]
-        //public async Task GetActorByIdAsync_ShouldReturnActor_WhenActorExist()
-        //{
-        //    // Arrange
-        //    var actorId = 1;
-        //    var actorName = "Aaron Paul";
-        //    var actorAge = 50;
-        //    List<string> tvSeriesNames = new() { "Breaking Bad" };
+        [Test]
+        public async Task GetActorByIdAsync_ShouldReturnActor_WhenActorExist()
+        {
+            // Arrange
+            var actorId = 1;
+            var actorName = "Aaron Paul";
+            var actorAge = 50;
+            List<string> tvSeriesNames = new() {  "Breaking Bad" };
 
-        //    var actorReadDto = new ActorReadDTO
-        //    {
-        //        ActorId = actorId,
-        //        Age = actorAge,
-        //        Fullname = actorName,
-        //        TVSeries = tvSeriesNames
-        //    };
+            var actorReadDto = new ActorReadDTO
+            {
+                Age = actorAge,
+                Fullname = actorName,
+                TVSeriesName = tvSeriesNames
+            };
 
-        //    var actor = new Actor
-        //    {
+            //var actor = new Actor
+            //{
+            //    ActorId = actorId,
+            //    Fullname = actorName,
+            //    Age = actorAge,
+            //    TVSeries = tvSeriesNames;
+            //};
 
-        //    };
-        //    _actorUnitOfWorkMock.Setup(x => x.Actors.GetActorByIdAsync(actorId))
-        //        .Returns(actorReadDto);
-        //    // Act
-        //    var actor = await _serviceTested.GetActorByIdAsync(actorId);
+            var actorUnitOfWork = await _actorUnitOfWorkMock.Object.Actors.GetActorByIdAsync(actorId); //.Setup(x => x.Actors.GetActorByIdAsync(actorId));
+            var mappedActor = _mapperMock.Object.Map<ActorReadDTO>(actorUnitOfWork);
+            // Act
+            var actor = await _serviceTested.GetActorByIdAsync(actorId);
 
-        //    // Assert
-        //    Assert.Equals(actor.ActorId, actorId);
+            // Assert
+            //Assert.Equals(actor.Fullname, mappedActor.Fullname);
+            Assert.Equals(actorReadDto.Fullname, mappedActor.Fullname);
 
-        //}
+        }
     }
 }

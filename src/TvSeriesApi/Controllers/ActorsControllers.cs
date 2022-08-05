@@ -25,7 +25,7 @@
         }
 
 
-        [SwaggerOperation(Summary = "Retrieves specific Artist")]
+        [SwaggerOperation(Summary = "Retrieves specific Artist by id")]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetByIdAsync(int id)
         {
