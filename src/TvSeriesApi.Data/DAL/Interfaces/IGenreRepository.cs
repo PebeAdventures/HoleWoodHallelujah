@@ -7,6 +7,6 @@ namespace TvSeriesApi.Data.DAL.Interfaces
     {
         Task<Genre> GetGenreByIdAsync(int id);
 
-        IQueryable<Genre> GetGenresPaginated(PageParameters ownerParameters);
+        IQueryable<Genre> GetGenresPaginated();
     }
 }
